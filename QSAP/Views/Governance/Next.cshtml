@@ -1,0 +1,30 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Next</title>
+    @Scripts.Render("~/bundles/jquery")
+
+    <script>
+
+    $(document).ready(function(){
+
+        alert('@ViewBag.timeoutWarning');
+        window.location = @Url.Action("Index", "Home");
+
+    });
+
+    </script>
+
+</head>
+<body>
+    <div>
+        
+    </div>
+</body>
+</html>

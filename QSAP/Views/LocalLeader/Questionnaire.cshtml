@@ -1,0 +1,187 @@
+﻿@{
+    ViewBag.Title = "Local Leadship - Questionnaire";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    input[type="radio"] {
+        width: 20px;
+    }
+
+    td {
+        text-align: center;
+    }
+
+        td.label-column {
+            text-align: left;
+        }
+</style>
+
+@model QSAP.ViewModels.QuestionAndRatingViewModel
+
+
+@using (Html.BeginForm("Next", "LocalLeader", FormMethod.Post))
+{
+    var i = 0;
+
+    foreach (var q in Model.questions)
+    {
+        if (q.Category_ID == 1 && Model.section.Number == 1)
+        {
+            <p>
+                @Model.section.QSAP.Description
+            </p>
+            <p>
+                <strong>Please rate to what extent you agree with the following statements related to establishing partnerships in preparation for WIOA Implementation.</strong>
+            </p>
+            <p>
+                <strong>Some indicator statements are applicable to both the state and local level, while others are for state or local level leaders.  Respond to only those indicator statements that are applicable to your level in the workforce system. </strong>
+            </p>
+            break;
+        }
+
+    }
+
+
+    <h2>Section <span id="section-number">@Model.section.Number: @Model.section.Name</span></h2>
+    <p><i>@Model.section.Message</i></p>
+    /*foreach (var q in Model.questions)
+    {
+        <h3 style="color:orange;">@q.Category.Name</h3>
+        break;
+    }*/
+    <table>
+        @foreach (var q in Model.questions)
+        {
+            i++;
+            if (q.Indicators.Count() > 0)
+            {
+                <tr><td colspan="6" align="left"><br />@Html.Raw(q.Number + ". " + q.Text)</td></tr>
+
+
+
+
+                <tr>
+                    <td></td>
+
+                    @foreach (var r in Model.ratings)
+                    {
+                        <td>@r.Text</td>
+                    }
+
+                </tr>
+
+
+                foreach (var ind in q.Indicators)
+                {
+
+                    <tr>
+                        <td class="label-column">@ind.Text</td>
+
+
+                        @foreach (var r in Model.ratings)
+                        {
+                            if (Session["UserInputI"] == null)
+                            {
+                                <td>@Html.RadioButton("I" + ind.Id.ToString(), r.Value)</td>
+                            }
+                            else
+                            {
+                                if (((Dictionary<string, string>)Session["UserInputI"]).ContainsKey("I" + ind.Id.ToString()) && r.Value.ToString() == ((Dictionary<string, string>)Session["UserInputI"])["I" + ind.Id.ToString()])
+                                {
+                                    <td>@Html.RadioButton("I" + ind.Id.ToString(), r.Value, true)</td>
+                                }
+                                else
+                                {
+                                    <td>@Html.RadioButton("I" + ind.Id.ToString(), r.Value)</td>
+                                }
+
+                            }
+
+                        }
+                    </tr>
+                }
+            }
+            else
+            {
+
+                if (i == 1)
+                {
+
+                    <tr>
+                        <td></td>
+
+                        @foreach (var r in Model.ratings)
+                        {
+                            <td>@r.Text</td>
+                        }
+
+                    </tr>
+                }
+
+                <tr>
+                    <td class="label-column">@q.Number . @q.Text</td>
+
+
+                    @foreach (var r in Model.ratings)
+                    {
+                        var key = "Q" + q.Id.ToString();
+
+                        if (Session["UserInputQ"] == null)
+                        {
+                            <td>@Html.RadioButton(key, r.Value)</td>
+                        }
+                        else
+                        {
+
+
+
+
+                            if (((Dictionary<string, string>)Session["UserInputQ"]).ContainsKey(key) && r.Value.ToString() == ((Dictionary<string, string>)Session["UserInputQ"])[key])
+                            {
+                                <td>@Html.RadioButton(key, r.Value, true)</td>
+                            }
+                            else
+                            {
+
+                                <td>@Html.RadioButton(key, r.Value)</td>
+                            }
+
+                        }
+
+                    }
+                </tr>
+
+            }
+        }
+
+
+
+
+
+
+    </table>
+
+
+
+    <br /><br />
+
+    if (Session["CurrentInfo"] == null || (((QSAP.ViewModels.CurrentInfo)Session["CurrentInfo"]).currentCategoryId == 1 && ((QSAP.ViewModels.CurrentInfo)Session["CurrentInfo"]).currentSectionNum == 1))
+    {
+        <input type="submit" value="Previous" disabled />
+    }
+    else
+    {
+        <input type="submit" value="Previous" name="action:Previous" />
+    }
+
+    if (TempData["IsLastScreen"] != null && Convert.ToBoolean(TempData["IsLastScreen"]) == true)
+    {
+        <input type="submit" value="Submit" name="action:Next" />
+    }
+    else
+    {
+        <input type="submit" value="Next" name="action:Next" />
+    }
+
+}

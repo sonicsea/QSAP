@@ -1,0 +1,254 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>@ViewBag.Title - QSAP</title>
+        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <meta name="viewport" content="width=device-width" />
+        @Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/modernizr")
+        @Scripts.Render("~/bundles/superfish")
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('ul.sf-menu').superfish();
+                if (window.location.pathname.toLowerCase().indexOf("partnership") != -1) {
+                    $('#partnershipnav').addClass("active");
+                }
+                else if (window.location.pathname.toLowerCase().indexOf("governance") != -1) {
+                    $('#governancenav').addClass("active");
+                }
+                else if (window.location.pathname.toLowerCase().indexOf("onestop") != -1) {
+                    $('#onestop').addClass("active");
+                }
+                else {
+                    $('#homenav').addClass("active");
+                }
+                
+            });
+        </script>
+
+        
+
+        
+
+    </head>
+    <body>
+        <header>
+            <div id="GlobalBar">
+                <ul id="GlobalNavL">
+                    <li class="GlobalNavLogo"><a href="http://www.workforce3one.org" class="lnk"><span></span></a></li>
+                    <li class="GlobalNavItem">
+                        <a href="#" class="lnk subMenu"><span>Communities</span></a>
+                        <ol class="left" style="width:350px;">
+                            <li class="header">Featured Communities</li>
+                            <li><a href="http://21stcenturyapprenticeship.workforce3one.org/"><span>21st Century Apprenticeship</span></a><div>http://21stcenturyapprenticeship.workforce3one.org</div></li>
+                            <li><a href="http://winwin.workforce3one.org/"><span>LMI Win-Win Network</span></a><div>http://winwin.workforce3one.org</div></li>
+                            <li><a href="http://reemploymentworks.workforce3one.org/"><span>Reemployment Works</span></a><div>http://reemploymentworks.workforce3one.org</div></li>
+                            <li><a href="http://youth.workforce3one.org/"><span>Youth Connections</span></a><div>http://youth.workforce3one.org</div></li>
+                            <li><a href="http://partnerships.workforce3one.org/"><span>Faith Based &amp; Neighborhood Partnerships</span></a><div>http://partnerships.workforce3one.org</div></li>
+                            <li><a href="http://disability.workforce3one.org/"><span>Disability and Employment</span></a><div>http://disability.workforce3one.org</div></li>
+                            <li class="header"><br>Featured Initiatives</li>
+                            <li><a href="http://www.workforce3one.org/view/2001125757596213518"><span>Small Business Toolkit</span></a><div>http://www.workforce3one.org/view/2001125757596213518</div></li>
+                            <li class="divitem"><a href="https://www.workforce3one.org/page/communities"><span>All Communities</span></a></li>
+                        </ol>
+                    </li>
+                </ul>
+
+                <ul id="GlobalNavR">
+
+                    <li class="GlobalNavItem">
+                        <a href="https://wioa.workforce3one.org/login.aspx" class="lnk"><span>Login</span></a>
+                        @*<form method="post" action="/login.aspx?ReturnUrl=%2fpage%2fhome">
+                            <ol class="right GlobalLogin" style="width:350px;">
+
+                                <li class="header"><div></div></li>
+                                <li class="GlobalLoginItem"><span>E-mail or Username</span><input type="text" name="login"></li>
+                                <li class="GlobalLoginItem"><span>Password</span><input type="password" name="pwd"></li>
+                                <li class="GlobalLoginBtn"><input type="button" value="Log in" onclick="this.form.submit();"></li>
+                                <li class="divitem"><a href="/passwords.aspx"><span>Forgot Your Password?</span></a></li>
+
+                            </ol>
+                        </form>*@
+                    </li>
+                    <li class="div"></li>
+                    <li class="GlobalNavItem"><a href="http://www.workforce3one.org/register.aspx" class="lnk"><span>Sign Up</span></a></li>
+
+                </ul>
+            </div>
+            <div id="PageBanner">
+                <a href="/"><img src="~/images/header.png" alt="Enhancing Workforce Leadership"></a>
+            </div>
+            <div id="PageNavContainer">
+                <div id="PageNavBar">
+                    <div class="NavTop">
+
+
+
+                        <ul id="PgMainNavL" class="sf-menu" style="touch-action: pan-y;">
+                            <li class="MainNavItem"><a href="https://wioa.workforce3one.org/page/home" class="lnk"><span>Home</span></a></li>
+                            <li class="MainNavItem"><a href="https://wioa.workforce3one.org/page/wioa101" class="lnk"><span>WIOA 101</span></a></li>
+
+                            <li class="MainNavItem MenuNavItem">
+                                <a href="https://wioa.workforce3one.org/page/resource" class="subMenu lnk"><span>RESOURCES</span></a>
+                                <ul class="left" style="display: none;">
+                                    <li><a href="http://wioa.workforce3one.org/page/resources/1001501462138962538"><span>Leadership and Partnerships</span></a></li>
+                                    <li><a href="http://wioa.workforce3one.org/page/resources/1001501462234208247"><span>Statewide Strategies</span></a></li>
+                                    <li><a href="http://wioa.workforce3one.org/page/resources/1001501462318340915"><span>Performance and Evaluation</span></a></li>
+                                    <li><a href="http://wioa.workforce3one.org/page/resources/1001501462393639983"><span>One-Stop Center Service Design</span></a></li>
+                                    <li><a href="http://wioa.workforce3one.org/page/resources/1001501462446701344"><span>Training and Career Services</span></a></li>
+                                    <li><a href="http://wioa.workforce3one.org/page/resources/1001501462591455374"><span>Employer Engagement and Business Services</span></a></li>
+                                    <li><a href="http://wioa.workforce3one.org/page/resources/1001501462655992299"><span>Strategies for Target Populations</span></a></li>
+                                    <li><a href="http://wioa.workforce3one.org/page/resources/1001501462743127899"><span>Program Management and Administrative Issues</span></a></li>
+                                </ul>
+                            </li>
+                            <li class="MainNavItem"><a href="https://wioa.workforce3one.org/page/wioaPartners" class="lnk"><span>Partners' WIOA Sites</span></a></li>
+                            <li class="MainNavItem MainNavItemSel"><a href="~/" class="lnk"><span>WIOA Action Planner</span></a></li>
+                        </ul>
+
+                        <div id="GlobalSearchBox">
+                            <style type="text/css">
+                                table.gsc-completion-container {
+                                    background-color: "white";
+                                    z-index: 10000 !important;
+                                }
+                            </style>
+                            <script type="text/javascript" src="//www.google.com/jsapi"></script>
+                            <script type="text/javascript">
+                                google.load('search', '1');
+                                google.setOnLoadCallback(
+                                    function () {
+                                        var cse1 = new google.search.CustomSearchControl.attachAutoCompletion(
+                                            '012552925046613264711:yzo27ujrwcg',
+                                            document.getElementById('q'),
+                                            'cse-search-box');
+                                    }
+                                );
+                            </script>
+                            <script src="https://www.google.com/uds/?file=search&amp;v=1" type="text/javascript"></script><link href="https://www.google.com/uds/api/search/1.0/cb6ef4de1f03dde8c26c6d526f8a1f35/default+en.css" type="text/css" rel="stylesheet">
+                            <script src="https://www.google.com/uds/api/search/1.0/cb6ef4de1f03dde8c26c6d526f8a1f35/default+en.I.js" type="text/javascript"></script>
+                            <div style="float:right; margin-right:4px;width: 212px; height: 21px;">
+                                <form action="https://wioa.workforce3one.org/gsearch" id="cse-search-box">
+                                    <input type="text" name="q" id="q" autocomplete="off" size="25" dir="ltr" spellcheck="false" style="outline: none;height: 21px;padding: 0; width: 200px;">
+                                    <input type="submit" name="sa" src="~/Images/gsearch_btn.png">
+                                    <input type="hidden" name="cx" value="012552925046613264711:yzo27ujrwcg">
+                                    <input type="hidden" name="cof" value="FORID:9">
+                                    <input type="hidden" name="ie" value="UTF-8">
+                                    <input type="hidden" name="as_sitesearch" value="wioa.workforce3one.org">
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </header>
+        <div id="body">            
+            @RenderSection("featured", required: false)
+
+
+            <div id="PageContent" class="">
+                <div class="PageContentBoxTop"><span class="pcbA"><div class="pcbB"></div></span></div>
+                <div class="PageContentBoxMid">
+                    <span class="pcbA">
+                        <div class="pcbZ">
+
+                            
+                            <section class="content-wrapper main-content clear-fix">
+                                <div id="page-container">
+                                    <div id="left-nav">
+                                        <ul class="alternative-ul">
+                                            <li id="homenav">@Html.ActionLink("Home", "Index", "Home")</li>
+                                            <li id="partnershipnav">@Html.ActionLink("Partnerships", "Index", "Partnerships")</li>
+                                            <li id="governancenav">@Html.ActionLink("State Leadership and Governance", "Index", "Governance")</li>
+                                            <li id="onestop">@Html.ActionLink("One-Stop Center Service Design", "Index", "OneStop")</li>
+                                            <li><a href="/">Youth Service Strategies</a></li>
+                                            <li><a href="/">Local Leadership and Governance</a></li>
+                                        </ul>
+
+
+                                    </div>
+                                    <div id="content-body">
+
+                                        @RenderBody()
+                                    </div>
+                                </div>
+                            </section>
+
+                        </div>
+                    </span>
+                </div>
+                <div class="PageContentBoxBot"><span class="pcbA"><div class="pcbB"></div></span></div>
+            </div>
+
+            
+        </div>
+
+        <div id="PageFooter">
+            <div id="PageFooterBar">
+                <div class="PageFooterWSInfo">
+                    <div class="PageFooterBoxTop"><span class="pfbA"><div class="pfbB"></div></span></div>
+                    <div class="PageFooterBoxMid">
+                        <span class="pfbA">
+                            <div class="pfbB">
+                                <h1>About Workforce Innovation and Opportunity Act (WIOA) Collection</h1>
+                                <p>
+                                    The WIOA Collection site will provide information and resources for States, local areas,
+                                    non-profits and other grantees, and other stakeholders to assist with implementation of the Act.
+                                </p>
+                                <div style="height:80px"></div>
+                            </div>
+                        </span>
+                    </div>
+
+                </div>
+
+                <div class="PageFooterInfo">
+                    <div class="PageFooterBoxMid">
+                        <span class="pfbA">
+                            <div class="pfbB">
+                                <div style="width:49%; float:left;" id="FooterItem1">
+                                    <h1><img src="~/images/rss.png" align="absmiddle" alt="">&nbsp;Subscribe</h1>
+                                    <p>Use the feeds below to stay connected with updates to this site's content.</p>
+                                    <br>
+
+
+                                </div>
+                                <div style="width:45%; float:right;" id="FooterItem2">
+                                    <a href="http://www.addthis.com/feed.php?pub=maheradmin&amp;h1=http%3a%2f%2f.workforce3one.org%2ffeed%2fdiscussions.aspx&amp;t1=" class="icoRSS">Recent Documents</a><br>
+                                    <br>
+                                    <a href="http://www.workforce3one.org/page/what_is_rss" class="morelnk">What is RSS</a><br>
+                                    <a href="/system/link.aspx?url=http%3A%2F%2Foffice.microsoft.com%2Fen-us%2Fhelp%2FHA101595391033.aspx%3Fpid%3DCH102458111033%233" class="morelnk">How to view RSS Feeds with Outlook</a>
+                                </div>
+                                <div style="clear:both;"></div>
+
+                                <div id="FootDisclaimer">
+                                    <a href="http://www.workforce3one.org/page/about">About</a> <span>|</span>
+                                    <a href="http://www.workforce3one.org/page/contact">Contact</a> <span>|</span>
+                                    <a href="http://support.workforce3one.org/">Help</a>
+                                    <br>
+                                    By using this web site, you agree to our
+                                    <a href="http://www.workforce3one.org/page/disclaimer"><u>Disclaimer</u></a>,
+                                    <a href="http://www.workforce3one.org/page/privacyagreement"><u>Privacy Agreement</u></a>, and
+                                    <a href="http://www.workforce3one.org/page/registrationnotice"><u>Registration Notice</u></a>.
+                                </div>
+                                <div id="DolFooter">
+                                    <div class="sponsor">
+                                        <a href="http://www.dol.gov" class="external"><img src="~/images/dol.png" alt="Department of Labor"></a>
+                                        <span>Workforce<sup>3</sup>One is sponsored by the U.S. Department of Labor, Employment and Training Administration</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </span>
+                    </div>
+
+                </div>
+                <div style="clear:both;"></div>
+            </div>
+        </div>
+        @RenderSection("scripts", required: false)
+    </body>
+</html>

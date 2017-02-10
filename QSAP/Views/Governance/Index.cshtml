@@ -1,0 +1,1909 @@
+﻿@{
+    ViewBag.Title = "State Leadership and Governance";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+input[type="radio"]{
+       width: 20px;
+}
+
+td{
+    text-align:center;
+}
+
+td.label-column{
+    text-align:left;
+}
+</style>
+
+<script src="~/Scripts/jquery.confirmExit.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("div.question").each(function (i) {
+            if ($(this).hasClass("current")) {
+                $(this).show();
+            } else {
+                $(this).hide();
+            }
+        });
+
+        $("#summary").hide();
+
+        $("#btnNext").click(function () {
+
+            $("div.question").each(function (i) {
+                if ($(this).hasClass("current")) {
+
+                    if (!$(this).attr('itemid')) {
+                        $("#summary").show();
+                        $("#questionnaire").hide();
+                        return false;
+                        //$('#section-number').html($(this).attr('itemid').substring(1, 2));
+                    }
+                    $(this).hide();
+                    $(this).removeClass("current");
+                    $('#' + $(this).attr('itemid')).addClass("current");
+                    $('#' + $(this).attr('itemid')).show();
+                    return false;
+                }
+            });
+
+        });
+
+        $("#btnPrev").click(function () {
+
+
+            $("div.question").each(function (i) {
+
+
+                if ($(this).hasClass("current")) {
+                    if (!$(this).attr('itemref')) {
+                        return false;
+                    }
+
+                    $(this).hide();
+                    $(this).removeClass("current");
+                    $('#' + $(this).attr('itemref')).addClass("current");
+                    $('#' + $(this).attr('itemref')).show();
+                    return false;
+                }
+            });
+
+        });
+
+        $('input[type=radio][name^=s1]').each(function () {
+
+            if ($(this).attr('id').indexOf("_na") >= 0) {
+                $(this).parent().parent().parent().parent().show();
+            }
+            else if ($(this).attr('id').indexOf("_view") >= 0 || $(this).attr('id').indexOf("_strength") >= 0) {
+                $(this).parent().parent().parent().parent().hide();
+            }
+            else {
+                $(this).parent().parent().parent().parent().show();
+            }
+        });
+
+        $('input[type=radio][name^=s2]').each(function () {
+
+            if ($(this).attr('id').indexOf("_na") >= 0) {
+                $(this).parent().parent().parent().parent().show();
+            }
+            else if ($(this).attr('id').indexOf("_view") >= 0 || $(this).attr('id').indexOf("_strength") >= 0) {
+                $(this).parent().parent().parent().parent().hide();
+            }
+            else {
+                $(this).parent().parent().parent().parent().show();
+            }
+        });
+
+        $('input[type=radio][name^=s3]').each(function () {
+
+            if ($(this).attr('id').indexOf("_na") >= 0) {
+                $(this).parent().parent().parent().parent().show();
+            }
+            else if ($(this).attr('id').indexOf("_view") >= 0 || $(this).attr('id').indexOf("_strength") >= 0) {
+                $(this).parent().parent().parent().parent().hide();
+            }
+            else {
+                $(this).parent().parent().parent().parent().show();
+            }
+        });
+
+        $('input[type=radio][name^=s4]').each(function () {
+
+            if ($(this).attr('id').indexOf("_na") >= 0) {
+                $(this).parent().parent().parent().parent().show();
+            }
+            else if ($(this).attr('id').indexOf("_view") >= 0 || $(this).attr('id').indexOf("_strength") >= 0) {
+                $(this).parent().parent().parent().parent().hide();
+            }
+            else {
+                $(this).parent().parent().parent().parent().show();
+            }
+        });
+
+        $('input[type=radio][name^=s5]').each(function () {
+
+            if ($(this).attr('id').indexOf("_na") >= 0) {
+                $(this).parent().parent().parent().parent().show();
+            }
+            else if ($(this).attr('id').indexOf("_view") >= 0 || $(this).attr('id').indexOf("_strength") >= 0) {
+                $(this).parent().parent().parent().parent().hide();
+            }
+            else {
+                $(this).parent().parent().parent().parent().show();
+            }
+        });
+
+        $('input[type=radio][name^=s6]').each(function () {
+
+            if ($(this).attr('id').indexOf("_na") >= 0) {
+                $(this).parent().parent().parent().parent().show();
+            }
+            else if ($(this).attr('id').indexOf("_view") >= 0 || $(this).attr('id').indexOf("_strength") >= 0) {
+                $(this).parent().parent().parent().parent().hide();
+            }
+            else {
+                $(this).parent().parent().parent().parent().show();
+            }
+        });
+
+        $('input[type=radio]').change(function () {
+
+            var new_id = $(this).attr('id') + "_view";
+
+            $('input[type=radio][name=' + new_id + ']').val([$(this).val()]);
+
+
+            var strength_id = $(this).attr('id') + "_view_strength";
+
+            $('input[type=radio][name=' + strength_id + ']').val([$(this).val()]);
+
+            var na_id = $(this).attr('id') + "_view_na";
+
+            $('input[type=radio][name=' + na_id + ']').val([$(this).val()]);
+
+            //alert($('input[type=radio][name=' + new_id + ']:checked').val());
+            //alert($('input[type=radio][name^=s1]').length);
+            //alert($('input[type=radio][name^=s1]:checked').length);
+
+            //alert($(this).attr('id'));
+
+            //var total_indicator = 0;
+
+            //if ($(this).attr('id').toLowerCase().indexOf('s1') >= 0)
+            //    total_indicator = $('input[type=radio][name^=s1]').length / 20;
+            //else if ($(this).attr('id').toLowerCase().indexOf('s2') >= 0)
+            //    total_indicator = $('input[type=radio][name^=s2]').length / 15;
+            //else
+            //    total_indicator = $('input[type=radio][name^=s3]').length / 15;
+
+
+            if ($('input[type=radio][name=' + new_id + ']:checked').val() == 1 || $('input[type=radio][name=' + new_id + ']:checked').val() == 2 || $('input[type=radio][name=' + new_id + ']:checked').val() == 3) {
+                $('input[type=radio][name=' + new_id + ']:checked').parent().parent().parent().show();
+
+            }
+
+            else
+                $('input[type=radio][name=' + new_id + ']:checked').parent().parent().parent().hide();
+
+            if ($('input[type=radio][name=' + new_id + ']:checked').parent().parent().parent().parent().children('tr:not([style*="display: none"])').length == 1)
+                $('input[type=radio][name=' + new_id + ']:checked').parent().parent().parent().parent().hide();
+            else
+                $('input[type=radio][name=' + new_id + ']:checked').parent().parent().parent().parent().show();
+            //
+            if ($('input[type=radio][name=' + strength_id + ']:checked').val() == 4 || $('input[type=radio][name=' + strength_id + ']:checked').val() == 5)
+                $('input[type=radio][name=' + strength_id + ']:checked').parent().parent().parent().show();
+            else
+                $('input[type=radio][name=' + strength_id + ']:checked').parent().parent().parent().hide();
+
+            if ($('input[type=radio][name=' + strength_id + ']:checked').parent().parent().parent().parent().children('tr:not([style*="display: none"])').length == 1)
+                $('input[type=radio][name=' + strength_id + ']:checked').parent().parent().parent().parent().hide();
+            else
+                $('input[type=radio][name=' + strength_id + ']:checked').parent().parent().parent().parent().show();
+            //
+            //alert($('input[type=radio][name=' + na_id + ']:checked').val());
+            if ($('input[type=radio][name=' + na_id + ']:checked').val() == 4 || $('input[type=radio][name=' + na_id + ']:checked').val() == 5
+                || $('input[type=radio][name=' + na_id + ']:checked').val() == 1
+                || $('input[type=radio][name=' + na_id + ']:checked').val() == 2
+                || $('input[type=radio][name=' + na_id + ']:checked').val() == 3)
+                $('input[type=radio][name=' + na_id + ']:checked').parent().parent().parent().hide();
+            else
+                $('input[type=radio][name=' + na_id + ']:checked').parent().parent().parent().show();
+
+            if ($('input[type=radio][name=' + na_id + ']:checked').parent().parent().parent().parent().children('tr:not([style*="display: none"])').length == 1)
+                $('input[type=radio][name=' + na_id + ']:checked').parent().parent().parent().parent().hide();
+            else
+                $('input[type=radio][name=' + na_id + ']:checked').parent().parent().parent().parent().show();
+
+
+
+
+            if ($(this).attr('id').toLowerCase().indexOf('s1') >= 0) {
+                CalculatePercent(1);
+            }
+            else if ($(this).attr('id').toLowerCase().indexOf('s2') >= 0) {
+                CalculatePercent(2);
+            }
+            else if ($(this).attr('id').toLowerCase().indexOf('s3') >= 0) {
+                CalculatePercent(3);
+            }
+            else if ($(this).attr('id').toLowerCase().indexOf('s4') >= 0) {
+                CalculatePercent(4);
+            }
+            else if ($(this).attr('id').toLowerCase().indexOf('s5') >= 0) {
+                CalculatePercent(5);
+            }
+            else {
+                CalculatePercent(6);
+            }
+
+
+
+
+        });
+
+        $("#section-1-trigger-action").click(function () {
+
+
+            if ($("#section-1-view-action").css('display') == 'none') {
+                $("#section-1-view-action").slideDown();
+                $("#section-1-trigger-action a").html("hide indicators");
+                $("#section-1-trigger-action img").attr("src", '@Url.Content("~/images/collapse.png")');
+            }
+            else {
+                $("#section-1-view-action").slideUp();
+                $("#section-1-trigger-action a").html("show indicators");
+                $("#section-1-trigger-action img").attr("src", '@Url.Content("~/images/expand.png")');
+            }
+
+
+
+
+        });
+
+        $("#section-1-trigger-strength").click(function () {
+
+
+            if ($("#section-1-view-strength").css('display') == 'none') {
+                $("#section-1-view-strength").slideDown();
+                $("#section-1-trigger-strength a").html("hide indicators");
+                $("#section-1-trigger-strength img").attr("src", '@Url.Content("~/images/collapse.png")');
+            }
+            else {
+                $("#section-1-view-strength").slideUp();
+                $("#section-1-trigger-strength a").html("show indicators");
+                $("#section-1-trigger-strength img").attr("src", '@Url.Content("~/images/expand.png")');
+            }
+
+
+
+
+        });
+
+        $("#section-1-trigger-na").click(function () {
+
+
+            if ($("#section-1-view-na").css('display') == 'none') {
+                $("#section-1-view-na").slideDown();
+                $("#section-1-trigger-na a").html("hide indicators");
+                $("#section-1-trigger-na img").attr("src", '@Url.Content("~/images/collapse.png")');
+            }
+            else {
+                $("#section-1-view-na").slideUp();
+                $("#section-1-trigger-na a").html("show indicators");
+                $("#section-1-trigger-na img").attr("src", '@Url.Content("~/images/expand.png")');
+            }
+
+
+
+
+        });
+
+        $("#section-2-trigger-action").click(function () {
+
+            if ($("#section-2-view-action").css('display') == 'none') {
+                $("#section-2-view-action").slideDown();
+                $("#section-2-trigger-action a").html("hide indicators");
+                $("#section-2-trigger-action img").attr("src", '@Url.Content("~/images/collapse.png")');
+            }
+            else {
+                $("#section-2-view-action").slideUp();
+                $("#section-2-trigger-action a").html("show indicators");
+                $("#section-2-trigger-action img").attr("src", '@Url.Content("~/images/expand.png")');
+            }
+
+        });
+
+        $("#section-2-trigger-strength").click(function () {
+
+            if ($("#section-2-view-strength").css('display') == 'none') {
+                $("#section-2-view-strength").slideDown();
+                $("#section-2-trigger-strength a").html("hide indicators");
+                $("#section-2-trigger-strength img").attr("src", '@Url.Content("~/images/collapse.png")');
+            }
+            else {
+                $("#section-2-view-strength").slideUp();
+                $("#section-2-trigger-strength a").html("show indicators");
+                $("#section-2-trigger-strength img").attr("src", '@Url.Content("~/images/expand.png")');
+            }
+
+        });
+
+        $("#section-2-trigger-na").click(function () {
+
+
+            if ($("#section-2-view-na").css('display') == 'none') {
+                $("#section-2-view-na").slideDown();
+                $("#section-2-trigger-na a").html("hide indicators");
+                $("#section-2-trigger-na img").attr("src", '@Url.Content("~/images/collapse.png")');
+            }
+            else {
+                $("#section-2-view-na").slideUp();
+                $("#section-2-trigger-na a").html("show indicators");
+                $("#section-2-trigger-na img").attr("src", '@Url.Content("~/images/expand.png")');
+            }
+
+
+
+
+        });
+
+        $("#section-3-trigger-action").click(function () {
+
+            if ($("#section-3-view-action").css('display') == 'none') {
+                $("#section-3-view-action").slideDown();
+                $("#section-3-trigger-action a").html("hide indicators");
+                $("#section-3-trigger-action img").attr("src", '@Url.Content("~/images/collapse.png")');
+            }
+            else {
+                $("#section-3-view-action").slideUp();
+                $("#section-3-trigger-action a").html("show indicators");
+                $("#section-3-trigger-action img").attr("src", '@Url.Content("~/images/expand.png")');
+            }
+
+        });
+
+        $("#section-3-trigger-strength").click(function () {
+
+            if ($("#section-3-view-strength").css('display') == 'none') {
+                $("#section-3-view-strength").slideDown();
+                $("#section-3-trigger-strength a").html("hide indicators");
+                $("#section-3-trigger-strength img").attr("src", '@Url.Content("~/images/collapse.png")');
+            }
+            else {
+                $("#section-3-view-strength").slideUp();
+                $("#section-3-trigger-strength a").html("show indicators");
+                $("#section-3-trigger-strength img").attr("src", '@Url.Content("~/images/expand.png")');
+            }
+
+        });
+
+        $("#section-3-trigger-na").click(function () {
+
+
+            if ($("#section-3-view-na").css('display') == 'none') {
+                $("#section-3-view-na").slideDown();
+                $("#section-3-trigger-na a").html("hide indicators");
+                $("#section-3-trigger-na img").attr("src", '@Url.Content("~/images/collapse.png")');
+            }
+            else {
+                $("#section-3-view-na").slideUp();
+                $("#section-3-trigger-na a").html("show indicators");
+                $("#section-3-trigger-na img").attr("src", '@Url.Content("~/images/expand.png")');
+            }
+
+
+
+
+        });
+
+
+        $("#section-4-trigger-action").click(function () {
+
+
+            if ($("#section-4-view-action").css('display') == 'none') {
+                $("#section-4-view-action").slideDown();
+                $("#section-4-trigger-action a").html("hide indicators");
+                $("#section-4-trigger-action img").attr("src", '@Url.Content("~/images/collapse.png")');
+            }
+            else {
+                $("#section-4-view-action").slideUp();
+                $("#section-4-trigger-action a").html("show indicators");
+                $("#section-4-trigger-action img").attr("src", '@Url.Content("~/images/expand.png")');
+            }
+
+
+
+
+        });
+
+        $("#section-4-trigger-strength").click(function () {
+
+
+            if ($("#section-4-view-strength").css('display') == 'none') {
+                $("#section-4-view-strength").slideDown();
+                $("#section-4-trigger-strength a").html("hide indicators");
+                $("#section-4-trigger-strength img").attr("src", '@Url.Content("~/images/collapse.png")');
+            }
+            else {
+                $("#section-4-view-strength").slideUp();
+                $("#section-4-trigger-strength a").html("show indicators");
+                $("#section-4-trigger-strength img").attr("src", '@Url.Content("~/images/expand.png")');
+            }
+
+
+
+
+        });
+
+        $("#section-4-trigger-na").click(function () {
+
+
+            if ($("#section-4-view-na").css('display') == 'none') {
+                $("#section-4-view-na").slideDown();
+                $("#section-4-trigger-na a").html("hide indicators");
+                $("#section-4-trigger-na img").attr("src", '@Url.Content("~/images/collapse.png")');
+            }
+            else {
+                $("#section-4-view-na").slideUp();
+                $("#section-4-trigger-na a").html("show indicators");
+                $("#section-4-trigger-na img").attr("src", '@Url.Content("~/images/expand.png")');
+            }
+
+
+
+
+        });
+
+        $("#section-5-trigger-action").click(function () {
+
+
+            if ($("#section-5-view-action").css('display') == 'none') {
+                $("#section-5-view-action").slideDown();
+                $("#section-5-trigger-action a").html("hide indicators");
+                $("#section-5-trigger-action img").attr("src", '@Url.Content("~/images/collapse.png")');
+            }
+            else {
+                $("#section-5-view-action").slideUp();
+                $("#section-5-trigger-action a").html("show indicators");
+                $("#section-5-trigger-action img").attr("src", '@Url.Content("~/images/expand.png")');
+            }
+
+
+
+
+        });
+
+        $("#section-5-trigger-strength").click(function () {
+
+
+            if ($("#section-5-view-strength").css('display') == 'none') {
+                $("#section-5-view-strength").slideDown();
+                $("#section-5-trigger-strength a").html("hide indicators");
+                $("#section-5-trigger-strength img").attr("src", '@Url.Content("~/images/collapse.png")');
+            }
+            else {
+                $("#section-5-view-strength").slideUp();
+                $("#section-5-trigger-strength a").html("show indicators");
+                $("#section-5-trigger-strength img").attr("src", '@Url.Content("~/images/expand.png")');
+            }
+
+
+
+
+        });
+
+        $("#section-5-trigger-na").click(function () {
+
+
+            if ($("#section-5-view-na").css('display') == 'none') {
+                $("#section-5-view-na").slideDown();
+                $("#section-5-trigger-na a").html("hide indicators");
+                $("#section-5-trigger-na img").attr("src", '@Url.Content("~/images/collapse.png")');
+            }
+            else {
+                $("#section-5-view-na").slideUp();
+                $("#section-5-trigger-na a").html("show indicators");
+                $("#section-5-trigger-na img").attr("src", '@Url.Content("~/images/expand.png")');
+            }
+
+
+
+
+        });
+
+        $("#section-6-trigger-action").click(function () {
+
+
+            if ($("#section-6-view-action").css('display') == 'none') {
+                $("#section-6-view-action").slideDown();
+                $("#section-6-trigger-action a").html("hide indicators");
+                $("#section-6-trigger-action img").attr("src", '@Url.Content("~/images/collapse.png")');
+            }
+            else {
+                $("#section-6-view-action").slideUp();
+                $("#section-6-trigger-action a").html("show indicators");
+                $("#section-6-trigger-action img").attr("src", '@Url.Content("~/images/expand.png")');
+            }
+
+
+            
+        });
+
+        $("#section-6-trigger-strength").click(function () {
+
+
+            if ($("#section-6-view-strength").css('display') == 'none') {
+                $("#section-6-view-strength").slideDown();
+                $("#section-6-trigger-strength a").html("hide indicators");
+                $("#section-6-trigger-strength img").attr("src", '@Url.Content("~/images/collapse.png")');
+            }
+            else {
+                $("#section-6-view-strength").slideUp();
+                $("#section-6-trigger-strength a").html("show indicators");
+                $("#section-6-trigger-strength img").attr("src", '@Url.Content("~/images/expand.png")');
+            }
+
+
+
+
+        });
+
+        $("#section-6-trigger-na").click(function () {
+
+
+            if ($("#section-6-view-na").css('display') == 'none') {
+                $("#section-6-view-na").slideDown();
+                $("#section-6-trigger-na a").html("hide indicators");
+                $("#section-6-trigger-na img").attr("src", '@Url.Content("~/images/collapse.png")');
+            }
+            else {
+                $("#section-6-view-na").slideUp();
+                $("#section-6-trigger-na a").html("show indicators");
+                $("#section-6-trigger-na img").attr("src", '@Url.Content("~/images/expand.png")');
+            }
+
+
+
+
+        });
+
+
+        $('#partnershipquestion').confirmExit('Warning!  You are about to exit the QSAP page.  If you exit this page, your responses will not be saved.');
+
+
+        $('td').filter(function (index) { return $(this).text() === "Strongly Disagree"; }).html('Not at all');
+        $('td').filter(function (index) { return $(this).text() === "Disagree"; }).html('Making progress but long way to go');
+        $('td').filter(function (index) { return $(this).text() === "Neither Disagree or Agree"; }).html('Have some of this, sometimes');
+        $('td').filter(function (index) { return $(this).text() === "Agree"; }).html('Yes, in place now');
+        $('td').filter(function (index) { return $(this).text() === "Strongly Agree"; }).html('Not only in place, but we’re excelling');
+
+    });
+
+    function CalculatePercent(sectionNum) {
+
+        var total_indicator = 0;
+        var total_action_checked = 0;
+        var total_strength_checked = 0;
+        var total_na = 0;
+        var percent_action = 0;
+        var percent_strength = 0;
+        var percent_na = 0;
+
+        total_indicator = $('input[type=radio][name^=s' + sectionNum + ']').length / 20;
+
+
+        $('input[type=radio][name^=s' + sectionNum + ']:checked').each(function () {
+
+            if ($(this).val() == 1 || $(this).val() == 2 || $(this).val() == 3) {
+                total_action_checked = total_action_checked + 1;
+            }
+            else {
+                total_strength_checked = total_strength_checked + 1;
+            }
+
+        });
+
+        total_action_checked = total_action_checked / 4;
+        total_strength_checked = total_strength_checked / 4;
+        total_na = total_indicator - total_action_checked - total_strength_checked;
+
+        percent_action = Math.round(total_action_checked / total_indicator * 100) / 100;
+        percent_strength = Math.round(total_strength_checked / total_indicator * 100) / 100;
+        percent_na = 1 - percent_action - percent_strength;
+        //percent_action = parseInt(total_action_checked * 100 / total_indicator);
+        //percent_action = parseInt(total_strength_checked * 100 / total_indicator);
+
+
+
+        percent_action = (percent_action * 100).toString();
+
+
+        if (percent_action.indexOf(".") >= 0)
+            percent_action = percent_action.substring(0, percent_action.indexOf("."));
+
+        percent_strength = (percent_strength * 100).toString();
+
+
+        if (percent_strength.indexOf(".") >= 0)
+            percent_strength = percent_strength.substring(0, percent_strength.indexOf("."));
+
+
+
+
+        percent_na = (percent_na * 100).toString();
+
+
+        if (percent_na.indexOf(".") >= 0)
+            percent_na = percent_na.substring(0, percent_na.indexOf("."));
+
+        $('#section-' + sesectionNum + '-action-summary').html("You indicated that " + percent_action + "% (" + total_action_checked + " of " + total_indicator + ") indicators are areas of action");
+        $('#section-' + sesectionNum + '-strength-summary').html("You indicated that " + percent_strength + "% (" + total_strength_checked + " of " + total_indicator + ") indicators are areas of strength");
+        $('#section-' + sesectionNum + '-na-summary').html("You indicated that " + percent_na + "% (" + total_na + " of " + total_indicator + ") indicators are N/A");
+    }
+</script>
+
+
+<form id="partnershipquestion">
+    <div id="questionnaire">
+
+
+        <!--itemid="next item" itemref="previous item"-->
+        <div id="S1Q1" class="question current" itemid="S1Q2" itemref="">
+            <h3>
+                A.	CONTINUOUS IMPROVEMENT AND STRATEGIC DEVELOPMENT
+            </h3>
+
+            <table>
+                <tr>
+                    <td></td>
+                    <td>Strongly Disagree</td>
+                    <td>Disagree</td>
+                    <td>Neither Disagree or Agree</td>
+                    <td>Agree</td>
+                    <td>Strongly Agree</td>
+                </tr>
+                <tr>
+                    <td class="label-column">1.	There is a comprehensive, strategic and transformative vision   in place for your state’s workforce development system.</td>
+                    <td><label>@Html.RadioButton("s1q1", 1)</label></td>
+                    <td><label>@Html.RadioButton("s1q1", 2)</label></td>
+                    <td><label>@Html.RadioButton("s1q1", 3)</label></td>
+                    <td><label>@Html.RadioButton("s1q1", 4)</label></td>
+                    <td><label>@Html.RadioButton("s1q1", 5)</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">2.	There is a system wide strategic plan to implement your state’s transformative vision which sets clear expectations for how the vision will be implemented.</td>
+                    <td><label>@Html.RadioButton("s1q2", 1)</label></td>
+                    <td><label>@Html.RadioButton("s1q2", 2)</label></td>
+                    <td><label>@Html.RadioButton("s1q2", 3)</label></td>
+                    <td><label>@Html.RadioButton("s1q2", 4)</label></td>
+                    <td><label>@Html.RadioButton("s1q2", 5)</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">3.	The state's regional economies have been identified including inter-state regions and workforce development activities statewide align with both in demand sectors and occupations.</td>
+                    <td><label>@Html.RadioButton("s1q3", 1)</label></td>
+                    <td><label>@Html.RadioButton("s1q3", 2)</label></td>
+                    <td><label>@Html.RadioButton("s1q3", 3)</label></td>
+                    <td><label>@Html.RadioButton("s1q3", 4)</label></td>
+                    <td><label>@Html.RadioButton("s1q3", 5)</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">4.	Sector-based service delivery systems are in place to facilitate the development, accessibility and delivery of workforce, education and training programs which close skill gaps and respond to the talent needs of employers in targeted sectors.</td>
+                    <td><label>@Html.RadioButton("s1q4", 1)</label></td>
+                    <td><label>@Html.RadioButton("s1q4", 2)</label></td>
+                    <td><label>@Html.RadioButton("s1q4", 3)</label></td>
+                    <td><label>@Html.RadioButton("s1q4", 4)</label></td>
+                    <td><label>@Html.RadioButton("s1q4", 5)</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">5.	There is a career pathway strategy in place statewide which aligns employment, training, education and supportive services for under-skilled persons especially those with barriers to employment, so that they can accelerate their acquisition of in demand skills and increase their recognized post-secondary credentials.</td>
+                    <td><label>@Html.RadioButton("s1q5", 1)</label></td>
+                    <td><label>@Html.RadioButton("s1q5", 2)</label></td>
+                    <td><label>@Html.RadioButton("s1q5", 3)</label></td>
+                    <td><label>@Html.RadioButton("s1q5", 4)</label></td>
+                    <td><label>@Html.RadioButton("s1q5", 5)</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">6.	Work-based learning opportunities with employers including on-the-job training, internships, pre-apprenticeships and Registered Apprenticeships are offered statewide as training paths to skilled employment.</td>
+                    <td><label>@Html.RadioButton("s1q6", 1)</label></td>
+                    <td><label>@Html.RadioButton("s1q6", 2)</label></td>
+                    <td><label>@Html.RadioButton("s1q6", 3)</label></td>
+                    <td><label>@Html.RadioButton("s1q6", 4)</label></td>
+                    <td><label>@Html.RadioButton("s1q6", 5)</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">7.	There is a customer engagement plan for effective and coordinated outreach which breaks down barriers to accessing workforce development services for all individual and employer customers based on the state’s identified vision and goals.</td>
+                    <td><label>@Html.RadioButton("s1q7", 1)</label></td>
+                    <td><label>@Html.RadioButton("s1q7", 2)</label></td>
+                    <td><label>@Html.RadioButton("s1q7", 3)</label></td>
+                    <td><label>@Html.RadioButton("s1q7", 4)</label></td>
+                    <td><label>@Html.RadioButton("s1q7", 5)</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">8.	There is a comprehensive cross-agency data and performance management system in place that covers at a minimum the WIOA Core required programs – Adult, Dislocated Worker, Youth, Wagner-Peyser, Adult Basic Education, and Vocational Rehabilitation.</td>
+                    <td><label>@Html.RadioButton("s1q8", 1)</label></td>
+                    <td><label>@Html.RadioButton("s1q8", 2)</label></td>
+                    <td><label>@Html.RadioButton("s1q8", 3)</label></td>
+                    <td><label>@Html.RadioButton("s1q8", 4)</label></td>
+                    <td><label>@Html.RadioButton("s1q8", 5)</label></td>
+                </tr>
+            </table>
+        </div>
+
+        <div id="S1Q2" class="question" itemid="S1Q3" itemref="S1Q1">
+            <h3>
+                B.	SYSTEM CAPACITY BUILDING
+            </h3>
+
+            <table>
+                <tr>
+                    <td></td>
+                    <td>Strongly Disagree</td>
+                    <td>Disagree</td>
+                    <td>Neither Disagree or Agree</td>
+                    <td>Agree</td>
+                    <td>Strongly Agree</td>
+                </tr>
+                <tr>
+                    <td class="label-column">1.	Staff training is in place to increase the skills and knowledge   of all staff in the workforce development system and ensure that staff have the skills for their new roles in a transformed system. </td>
+                    <td><label>@Html.RadioButton("s2q1", 1)</label></td>
+                    <td><label>@Html.RadioButton("s2q1", 2)</label></td>
+                    <td><label>@Html.RadioButton("s2q1", 3)</label></td>
+                    <td><label>@Html.RadioButton("s2q1", 4)</label></td>
+                    <td><label>@Html.RadioButton("s2q1", 5)</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">2.	A system for the identification and dissemination of best practices for meeting the needs of employers, workers and jobseekers is in place throughout the statewide system and all of its program partners.</td>
+                    <td><label>@Html.RadioButton("s2q2", 1)</label></td>
+                    <td><label>@Html.RadioButton("s2q2", 2)</label></td>
+                    <td><label>@Html.RadioButton("s2q2", 3)</label></td>
+                    <td><label>@Html.RadioButton("s2q2", 4)</label></td>
+                    <td><label>@Html.RadioButton("s2q2", 5)</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">3.	Business services and service delivery strategies are coordinated state wide across all of the program partners and measures of effectiveness are in place.</td>
+                    <td><label>@Html.RadioButton("s2q3", 1)</label></td>
+                    <td><label>@Html.RadioButton("s2q3", 2)</label></td>
+                    <td><label>@Html.RadioButton("s2q3", 3)</label></td>
+                    <td><label>@Html.RadioButton("s2q3", 4)</label></td>
+                    <td><label>@Html.RadioButton("s2q3", 5)</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">4.	Objective criteria are in place for assessing the effectiveness of and continuous improvement of One-Stops statewide.</td>
+                    <td><label>@Html.RadioButton("s2q4", 1)</label></td>
+                    <td><label>@Html.RadioButton("s2q4", 2)</label></td>
+                    <td><label>@Html.RadioButton("s2q4", 3)</label></td>
+                    <td><label>@Html.RadioButton("s2q4", 4)</label></td>
+                    <td><label>@Html.RadioButton("s2q4", 5)</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">5.	Policies are in place identifying the appropriate roles and contribution of resources for all of the required One-Stop program partners under WIOA.</td>
+                    <td><label>@Html.RadioButton("s2q5", 1)</label></td>
+                    <td><label>@Html.RadioButton("s2q5", 2)</label></td>
+                    <td><label>@Html.RadioButton("s2q5", 3)</label></td>
+                    <td><label>@Html.RadioButton("s2q5", 4)</label></td>
+                    <td><label>@Html.RadioButton("s2q5", 5)</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">6.	Effective local boards are supported by state policies to enable outstanding success, to sustain fiscal integrity and to perform all other local board activities with measurable effectiveness.</td>
+                    <td><label>@Html.RadioButton("s2q6", 1)</label></td>
+                    <td><label>@Html.RadioButton("s2q6", 2)</label></td>
+                    <td><label>@Html.RadioButton("s2q6", 3)</label></td>
+                    <td><label>@Html.RadioButton("s2q6", 4)</label></td>
+                    <td><label>@Html.RadioButton("s2q6", 5)</label></td>
+                </tr>
+            </table>
+        </div>
+
+        <div id="S1Q3" class="question" itemid="S1Q4" itemref="S1Q2">
+            <h3>
+                C.	SYSTEM ALIGNMENT AND EFFECTIVE OPERATIONS
+            </h3>
+
+            <table>
+                <tr>
+                    <td></td>
+                    <td>Strongly Disagree</td>
+                    <td>Disagree</td>
+                    <td>Neither Disagree or Agree</td>
+                    <td>Agree</td>
+                    <td>Strongly Agree</td>
+                </tr>
+                <tr>
+                    <td class="label-column">1.	Statewide strategies are in place for technological improvements focused on increasing customers digital literacy, increasing access to online services and insuring that technology-based services are accessible to individuals with disabilities and individuals without private access to technology.</td>
+                    <td><label>@Html.RadioButton("s3q1", 1)</label></td>
+                    <td><label>@Html.RadioButton("s3q1", 2)</label></td>
+                    <td><label>@Html.RadioButton("s3q1", 3)</label></td>
+                    <td><label>@Html.RadioButton("s3q1", 4)</label></td>
+                    <td><label>@Html.RadioButton("s3q1", 5)</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">2.	Integrated data systems are in place across One-Stop partners to increase use of common intake and data collection across all One-Stop program partners to maximize the effectiveness of the system for all customers.</td>
+                    <td><label>@Html.RadioButton("s3q2", 1)</label></td>
+                    <td><label>@Html.RadioButton("s3q2", 2)</label></td>
+                    <td><label>@Html.RadioButton("s3q2", 3)</label></td>
+                    <td><label>@Html.RadioButton("s3q2", 4)</label></td>
+                    <td><label>@Html.RadioButton("s3q2", 5)</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">3.	Integrated data systems are in place across One-Stop partners to inform policy, track progress and measure success.</td>
+                    <td><label>@Html.RadioButton("s3q3", 1)</label></td>
+                    <td><label>@Html.RadioButton("s3q3", 2)</label></td>
+                    <td><label>@Html.RadioButton("s3q3", 3)</label></td>
+                    <td><label>@Html.RadioButton("s3q3", 4)</label></td>
+                    <td><label>@Html.RadioButton("s3q3", 5)</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">4.	The state has a policy infrastructure in place to support all required activities such as resource allocations and reporting for all program activities required under WIOA.</td>
+                    <td><label>@Html.RadioButton("s3q4", 1)</label></td>
+                    <td><label>@Html.RadioButton("s3q4", 2)</label></td>
+                    <td><label>@Html.RadioButton("s3q4", 3)</label></td>
+                    <td><label>@Html.RadioButton("s3q4", 4)</label></td>
+                    <td><label>@Html.RadioButton("s3q4", 5)</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">5.	The state’s Labor Market Information system provides real time and user friendly, labor market information on a statewide, local and regional basis.</td>
+                    <td><label>@Html.RadioButton("s3q5", 1)</label></td>
+                    <td><label>@Html.RadioButton("s3q5", 2)</label></td>
+                    <td><label>@Html.RadioButton("s3q5", 3)</label></td>
+                    <td><label>@Html.RadioButton("s3q5", 4)</label></td>
+                    <td><label>@Html.RadioButton("s3q5", 5)</label></td>
+                </tr>
+            </table>
+        </div>
+
+
+        <div id="S1Q4" class="question" itemid="S1Q5" itemref="S1Q3">
+            <h3>
+                D.	STATE WORKFORCE BOARD MEMBERSHIP
+            </h3>
+            <p>
+                Under WIOA, a governor is required to either establish a new State Workforce Development Board (WDB) or designate a board established prior to August 7, 1998 to serve as the state’s Workforce Development Board. WIOA continues the practice of a Governor appointed Chair from the business members of the WDB.
+            </p>
+            <table>
+                <tr>
+                    <td></td>
+                    <td>Strongly Disagree</td>
+                    <td>Disagree</td>
+                    <td>Neither Disagree or Agree</td>
+                    <td>Agree</td>
+                    <td>Strongly Agree</td>
+                </tr>
+                <tr>
+                    <td class="label-column">1.	Members of the State Board represent diverse geographic areas of the state including rural, urban and suburban.</td>
+                    <td><label>@Html.RadioButton("s4q1", 1)</label></td>
+                    <td><label>@Html.RadioButton("s4q1", 2)</label></td>
+                    <td><label>@Html.RadioButton("s4q1", 3)</label></td>
+                    <td><label>@Html.RadioButton("s4q1", 4)</label></td>
+                    <td><label>@Html.RadioButton("s4q1", 5)</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">2.	A member of each chamber of the State Legislature is appointed by the appropriate presiding officer of that Legislative Chamber.</td>
+                    <td><label>@Html.RadioButton("s4q2", 1)</label></td>
+                    <td><label>@Html.RadioButton("s4q2", 2)</label></td>
+                    <td><label>@Html.RadioButton("s4q2", 3)</label></td>
+                    <td><label>@Html.RadioButton("s4q2", 4)</label></td>
+                    <td><label>@Html.RadioButton("s4q2", 5)</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">3.	Business members comprise at least 51% of State Board membership – and are business owners, or other executives or employers including small businesses and representatives of employment that at a minimum include high quality, work relevant training and development in in-demand industry sectors or occupations in the state.</td>
+                    <td><label>@Html.RadioButton("s4q3", 1)</label></td>
+                    <td><label>@Html.RadioButton("s4q3", 2)</label></td>
+                    <td><label>@Html.RadioButton("s4q3", 3)</label></td>
+                    <td><label>@Html.RadioButton("s4q3", 4)</label></td>
+                    <td><label>@Html.RadioButton("s4q3", 5)</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">4.	Workforce representative comprise at least 20% of State Board membership – and include representatives of labor organizations nominated by state labor federations and a representative from a joint labor-management apprenticeship program or if none exists, a representative of an apprenticeship program in the state.</td>
+                    <td><label>@Html.RadioButton("s4q4", 1)</label></td>
+                    <td><label>@Html.RadioButton("s4q4", 2)</label></td>
+                    <td><label>@Html.RadioButton("s4q4", 3)</label></td>
+                    <td><label>@Html.RadioButton("s4q4", 4)</label></td>
+                    <td><label>@Html.RadioButton("s4q4", 5)</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">5.	Lead State Officials with primary responsibility for the Core Programs are members of the State Board.</td>
+                    <td><label>@Html.RadioButton("s4q5", 1)</label></td>
+                    <td><label>@Html.RadioButton("s4q5", 2)</label></td>
+                    <td><label>@Html.RadioButton("s4q5", 3)</label></td>
+                    <td><label>@Html.RadioButton("s4q5", 4)</label></td>
+                    <td><label>@Html.RadioButton("s4q5", 5)</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">6.	Chief elected officials collectively representing both cities/ counties are members of the State Board.</td>
+                    <td><label>@Html.RadioButton("s4q6", 1)</label></td>
+                    <td><label>@Html.RadioButton("s4q6", 2)</label></td>
+                    <td><label>@Html.RadioButton("s4q6", 3)</label></td>
+                    <td><label>@Html.RadioButton("s4q6", 4)</label></td>
+                    <td><label>@Html.RadioButton("s4q6", 5)</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">7.	The State Board does not contain any representative of multiple categories.</td>
+                    <td><label>@Html.RadioButton("s4q7", 1)</label></td>
+                    <td><label>@Html.RadioButton("s4q7", 2)</label></td>
+                    <td><label>@Html.RadioButton("s4q7", 3)</label></td>
+                    <td><label>@Html.RadioButton("s4q7", 4)</label></td>
+                    <td><label>@Html.RadioButton("s4q7", 5)</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">8.	Representatives of community-based organizations are members of the State Board, including those with experience with individuals with barriers to employment, those that serve veterans or those that provide competitive, integrated employment for individuals with disabilities, those that serve out-of-school youth.</td>
+                    <td><label>@Html.RadioButton("s4q8", 1)</label></td>
+                    <td><label>@Html.RadioButton("s4q8", 2)</label></td>
+                    <td><label>@Html.RadioButton("s4q8", 3)</label></td>
+                    <td><label>@Html.RadioButton("s4q8", 4)</label></td>
+                    <td><label>@Html.RadioButton("s4q8", 5)</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">9.	Governor-designated state agency officials from agencies that are One-Stop partners whose programs are covered by the State Plan not including officials responsible for WIA  Youth, Adult and Dislocated Worker, Adult Basic Education, Wagner-Peyser or Vocational Rehabilitation  Programs are members of the State Board.</td>
+                    <td><label>@Html.RadioButton("s4q9", 1)</label></td>
+                    <td><label>@Html.RadioButton("s4q9", 2)</label></td>
+                    <td><label>@Html.RadioButton("s4q9", 3)</label></td>
+                    <td><label>@Html.RadioButton("s4q9", 4)</label></td>
+                    <td><label>@Html.RadioButton("s4q9", 5)</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column"> 10. state agency officials responsible for economic development are members of the state board.</td>
+                    <td><label>@Html.RadioButton("s4q10", 1)</label></td>
+                    <td><label>@Html.RadioButton("s4q10", 2)</label></td>
+                    <td><label>@Html.RadioButton("s4q10", 3)</label></td>
+                    <td><label>@Html.RadioButton("s4q10", 4)</label></td>
+                    <td><label>@Html.RadioButton("s4q10", 5)</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">11. State agency officials responsible for juvenile justice are members of the State Board.</td>
+                    <td><label>@Html.RadioButton("s4q11", 1)</label></td>
+                    <td><label>@Html.RadioButton("s4q11", 2)</label></td>
+                    <td><label>@Html.RadioButton("s4q11", 3)</label></td>
+                    <td><label>@Html.RadioButton("s4q11", 4)</label></td>
+                    <td><label>@Html.RadioButton("s4q11", 5)</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">12. Individuals who represent an Indian tribe or tribal organization are members of the State Board.</td>
+                    <td><label>@Html.RadioButton("s4q12", 1)</label></td>
+                    <td><label>@Html.RadioButton("s4q12", 2)</label></td>
+                    <td><label>@Html.RadioButton("s4q12", 3)</label></td>
+                    <td><label>@Html.RadioButton("s4q12", 4)</label></td>
+                    <td><label>@Html.RadioButton("s4q12", 5)</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">13. State agency officials responsible for education programs including chief executive officers of community colleges and other institutions of higher education are members of the State Board.</td>
+                    <td><label>@Html.RadioButton("s4q13", 1)</label></td>
+                    <td><label>@Html.RadioButton("s4q13", 2)</label></td>
+                    <td><label>@Html.RadioButton("s4q13", 3)</label></td>
+                    <td><label>@Html.RadioButton("s4q13", 4)</label></td>
+                    <td><label>@Html.RadioButton("s4q13", 5)</label></td>
+                </tr>
+            </table>
+        </div>
+
+
+        <div id="S1Q5" class="question" itemid="S1Q6" itemref="S1Q4">
+            <h3>
+                E.	UNIFIED AND COMBINED STATE PLANS
+            </h3>
+            <p>
+                Under WIOA Your State Workforce Development Board must be prepared to assist the Governor to manage the development and implementation of the four year plan due on March 1, 2016 as well as a two year timeline for the modification of the State Plan. WIOA State Plans will be approved jointly by the US Secretaries of Labor and Education.  The WIOA State Plan will identify how the State will meet the identified skills needs of workers, job seekers and employers and must be a strategic and transformative plan for a comprehensive and streamlined workforce development statewide system as well as for the development and continuous improvement of the system. The state plan should clearly address WIOA’s emphasis on strengthening existing workforce development and adult education programs to create a much more integrated and connected system which  improves services to adults and youth with barriers to economic success.
+            </p>
+
+            <table>
+                <tr>
+                    <td></td>
+                    <td>Strongly Disagree</td>
+                    <td>Disagree</td>
+                    <td>Neither Disagree or Agree</td>
+                    <td>Agree</td>
+                    <td>Strongly Agree</td>
+                </tr>
+                <tr>
+                    <td class="label-column">1.	Comprehensive and inclusive program and community partnerships are in place to ensure that the state’s planning process includes broad and authentic participation of all stakeholders and creates an actionable plan to implement the state’s vision and strategic goals.</td>
+                    <td><label>@Html.RadioButton("s5q1", 1)</label></td>
+                    <td><label>@Html.RadioButton("s5q1", 2)</label></td>
+                    <td><label>@Html.RadioButton("s5q1", 3)</label></td>
+                    <td><label>@Html.RadioButton("s5q1", 4)</label></td>
+                    <td><label>@Html.RadioButton("s5q1", 5)</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">2.	My state is prepared to develop a four year Unified State Plan by March 2016 which includes the required Core Partners.</td>
+                    <td><label>@Html.RadioButton("s5q2", 1)</label></td>
+                    <td><label>@Html.RadioButton("s5q2", 2)</label></td>
+                    <td><label>@Html.RadioButton("s5q2", 3)</label></td>
+                    <td><label>@Html.RadioButton("s5q2", 4)</label></td>
+                    <td><label>@Html.RadioButton("s5q2", 5)</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">3.	My state is prepared to develop a four year Combined State Plan by March 2016 which includes the required Core Partners and one or more additional federal programs.</td>
+                    <td><label>@Html.RadioButton("s5q3", 1)</label></td>
+                    <td><label>@Html.RadioButton("s5q3", 2)</label></td>
+                    <td><label>@Html.RadioButton("s5q3", 3)</label></td>
+                    <td><label>@Html.RadioButton("s5q3", 4)</label></td>
+                    <td><label>@Html.RadioButton("s5q3", 5)</label></td>
+                </tr>
+            </table>
+        </div>
+
+        <div id="S1Q6" class="question" itemid="" itemref="S1Q5">
+            <h3>
+                F.	MEMORANDUMS OF UNDERSTANDING
+            </h3>
+            <p>
+                In order to ensure that services provided across the programs in One-Stop centers are coordinated and integrated, Memorandums of Understanding (MOUs) are required between program partners in WIOA. 
+            </p>
+
+            <table>
+                <tr>
+                    <td></td>
+                    <td>Strongly Disagree</td>
+                    <td>Disagree</td>
+                    <td>Neither Disagree or Agree</td>
+                    <td>Agree</td>
+                    <td>Strongly Agree</td>
+                </tr>
+                <tr>
+                    <td class="label-column">1.	Services to be provided through the One-Stop delivery system are outlined.</td>
+                    <td><label>@Html.RadioButton("s6q1", 1)</label></td>
+                    <td><label>@Html.RadioButton("s6q1", 2)</label></td>
+                    <td><label>@Html.RadioButton("s6q1", 3)</label></td>
+                    <td><label>@Html.RadioButton("s6q1", 4)</label></td>
+                    <td><label>@Html.RadioButton("s6q1", 5)</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">2.	How the cost of the services and operating costs will be funded is identified.</td>
+                    <td><label>@Html.RadioButton("s6q2", 1)</label></td>
+                    <td><label>@Html.RadioButton("s6q2", 2)</label></td>
+                    <td><label>@Html.RadioButton("s6q2", 3)</label></td>
+                    <td><label>@Html.RadioButton("s6q2", 4)</label></td>
+                    <td><label>@Html.RadioButton("s6q2", 5)</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">3.	Methods of referral to individuals between the One-Stop operator and the One-Stop partners for services and activities are clearly laid out.</td>
+                    <td><label>@Html.RadioButton("s6q3", 1)</label></td>
+                    <td><label>@Html.RadioButton("s6q3", 2)</label></td>
+                    <td><label>@Html.RadioButton("s6q3", 3)</label></td>
+                    <td><label>@Html.RadioButton("s6q3", 4)</label></td>
+                    <td><label>@Html.RadioButton("s6q3", 5)</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">4.	Duration of the MOU is defined.</td>
+                    <td><label>@Html.RadioButton("s6q4", 1)</label></td>
+                    <td><label>@Html.RadioButton("s6q4", 2)</label></td>
+                    <td><label>@Html.RadioButton("s6q4", 3)</label></td>
+                    <td><label>@Html.RadioButton("s6q4", 4)</label></td>
+                    <td><label>@Html.RadioButton("s6q4", 5)</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">5.	Methods to ensure that the needs of individuals with barriers to employment are addressed are clear.</td>
+                    <td><label>@Html.RadioButton("s6q5", 1)</label></td>
+                    <td><label>@Html.RadioButton("s6q5", 2)</label></td>
+                    <td><label>@Html.RadioButton("s6q5", 3)</label></td>
+                    <td><label>@Html.RadioButton("s6q5", 4)</label></td>
+                    <td><label>@Html.RadioButton("s6q5", 5)</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">6.	Procedures for amending and assurances that the MOU will be reviewed at least once every two years are in place.</td>
+                    <td><label>@Html.RadioButton("s6q6", 1)</label></td>
+                    <td><label>@Html.RadioButton("s6q6", 2)</label></td>
+                    <td><label>@Html.RadioButton("s6q6", 3)</label></td>
+                    <td><label>@Html.RadioButton("s6q6", 4)</label></td>
+                    <td><label>@Html.RadioButton("s6q6", 5)</label></td>
+                </tr>
+            </table>
+        </div>
+
+
+        <br /><br />
+        <input type="button" value="Previous" id="btnPrev" />
+        <input type="button" value="Next" id="btnNext" />
+
+    </div>
+</form>
+<div id="summary">
+    <h1 style="color:orange;">Congratulations!</h1>
+    <div style="height:120px;border-bottom: solid 2px lightgray;">
+        <div style="float:left; width:50%;"><h3>You have finished the questionnaire portion of Parnership QSAP.</h3></div>
+        <div style="float:right; width:40%;">
+            <input type="button" value="DOWNLOAD PDF" id="btnPDF" />
+            <input type="button" value="SAVE A COPY TO HARD DRIVE" id="btnHard" />
+        </div>
+    </div>
+
+    <p>
+        Below are your assessment results, which provide a summary of your answers to questions in each QSAP section. You may click on the "show indicators" links to see how you responded to particular questions
+        and indicators in each section. In addition, clicking on the "show resources" links for each section will provide you with a customized list of resources to help you strengthen areas of you OJT
+        efforts in which you may need additional assistance or support. You may use these results and the corresponding resources to prioritize area of focus for your OJT expansion and enhancement efforts.
+    </p>
+    <div id="section-1-view" class="section-view-header">
+        <div style="float:left;">A.	CONTINUOUS IMPROVEMENT</div>
+    </div>
+    <div id="section-1-trigger-action" class="section-view">
+        <div style="float:left;" id="section-1-action-summary">You indicated that 0% (0 of 0) indicators are areas of action</div>
+        <div style="float:right;">
+            <img src="~/images/expand.png" align="middle" hspace="4" alt="Show Indicators" style="margin-top:-10px;">
+            <a href="#" onclick="return false;">show indicators</a>
+        </div>
+    </div>
+    <div id="section-1-view-action" style="display:none;">
+        <div id="S1Q1_view">
+            <h3>
+                A.	CONTINUOUS IMPROVEMENT AND STRATEGIC DEVELOPMENT
+            </h3>
+
+            <table>
+                <tr>
+                    <td></td>
+                    <td>Strongly Disagree</td>
+                    <td>Disagree</td>
+                    <td>Neither Disagree or Agree</td>
+                    <td>Agree</td>
+                    <td>Strongly Agree</td>
+                </tr>
+                <tr>
+                    <td class="label-column">1.	There is a comprehensive, strategic and transformative vision   in place for your state’s workforce development system.</td>
+                    <td><label>@Html.RadioButton("s1q1_view", 1, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q1_view", 2, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q1_view", 3, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q1_view", 4, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q1_view", 5, false, new { disabled = "disabled" })</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">2.	There is a system wide strategic plan to implement your state’s transformative vision which sets clear expectations for how the vision will be implemented.</td>
+                    <td><label>@Html.RadioButton("s1q2_view", 1, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q2_view", 2, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q2_view", 3, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q2_view", 4, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q2_view", 5, false, new { disabled = "disabled" })</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">3.	The state's regional economies have been identified including inter-state regions and workforce development activities statewide align with both in demand sectors and occupations.</td>
+                    <td><label>@Html.RadioButton("s1q3_view", 1, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q3_view", 2, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q3_view", 3, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q3_view", 4, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q3_view", 5, false, new { disabled = "disabled" })</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">4.	Sector-based service delivery systems are in place to facilitate the development, accessibility and delivery of workforce, education and training programs which close skill gaps and respond to the talent needs of employers in targeted sectors.</td>
+                    <td><label>@Html.RadioButton("s1q4_view", 1, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q4_view", 2, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q4_view", 3, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q4_view", 4, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q4_view", 5, false, new { disabled = "disabled" })</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">5.	There is a career pathway strategy in place statewide which aligns employment, training, education and supportive services for under-skilled persons especially those with barriers to employment, so that they can accelerate their acquisition of in demand skills and increase their recognized post-secondary credentials.</td>
+                    <td><label>@Html.RadioButton("s1q5_view", 1, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q5_view", 2, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q5_view", 3, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q5_view", 4, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q5_view", 5, false, new { disabled = "disabled" })</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">6.	Work-based learning opportunities with employers including on-the-job training, internships, pre-apprenticeships and Registered Apprenticeships are offered statewide as training paths to skilled employment.</td>
+                    <td><label>@Html.RadioButton("s1q6_view", 1, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q6_view", 2, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q6_view", 3, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q6_view", 4, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q6_view", 5, false, new { disabled = "disabled" })</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">7.	There is a customer engagement plan for effective and coordinated outreach which breaks down barriers to accessing workforce development services for all individual and employer customers based on the state’s identified vision and goals.</td>
+                    <td><label>@Html.RadioButton("s1q7_view", 1, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q7_view", 2, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q7_view", 3, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q7_view", 4, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q7_view", 5, false, new { disabled = "disabled" })</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">8.	There is a comprehensive cross-agency data and performance management system in place that covers at a minimum the WIOA Core required programs – Adult, Dislocated Worker, Youth, Wagner-Peyser, Adult Basic Education, and Vocational Rehabilitation.</td>
+                    <td><label>@Html.RadioButton("s1q8_view", 1, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q8_view", 2, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q8_view", 3, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q8_view", 4, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q8_view", 5, false, new { disabled = "disabled" })</label></td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+
+    <div id="section-1-trigger-strength" class="section-view">
+        <div style="float:left;" id="section-1-strength-summary">You indicated that 0% (0 of 0) indicators are areas of strength</div>
+        <div style="float:right;">
+            <img src="~/images/expand.png" align="middle" hspace="4" alt="Show Indicators" style="margin-top:-10px;">
+            <a href="#" onclick="return false;">show indicators</a>
+        </div>
+    </div>
+    <div id="section-1-view-strength" style="display:none;">
+        <div id="S1Q1_view_strength">
+            <h3>
+                A.	CONTINUOUS IMPROVEMENT AND STRATEGIC DEVELOPMENT
+            </h3>
+
+            <table>
+                <tr>
+                    <td></td>
+                    <td>Strongly Disagree</td>
+                    <td>Disagree</td>
+                    <td>Neither Disagree or Agree</td>
+                    <td>Agree</td>
+                    <td>Strongly Agree</td>
+                </tr>
+                <tr>
+                    <td class="label-column">1.	There is a comprehensive, strategic and transformative vision   in place for your state’s workforce development system.</td>
+                    <td><label>@Html.RadioButton("s1q1_view_strength", 1, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q1_view_strength", 2, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q1_view_strength", 3, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q1_view_strength", 4, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q1_view_strength", 5, false, new { disabled = "disabled" })</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">2.	There is a system wide strategic plan to implement your state’s transformative vision which sets clear expectations for how the vision will be implemented.</td>
+                    <td><label>@Html.RadioButton("s1q2_view_strength", 1, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q2_view_strength", 2, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q2_view_strength", 3, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q2_view_strength", 4, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q2_view_strength", 5, false, new { disabled = "disabled" })</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">3.	The state's regional economies have been identified including inter-state regions and workforce development activities statewide align with both in demand sectors and occupations.</td>
+                    <td><label>@Html.RadioButton("s1q3_view_strength", 1, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q3_view_strength", 2, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q3_view_strength", 3, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q3_view_strength", 4, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q3_view_strength", 5, false, new { disabled = "disabled" })</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">4.	Sector-based service delivery systems are in place to facilitate the development, accessibility and delivery of workforce, education and training programs which close skill gaps and respond to the talent needs of employers in targeted sectors.</td>
+                    <td><label>@Html.RadioButton("s1q4_view_strength", 1, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q4_view_strength", 2, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q4_view_strength", 3, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q4_view_strength", 4, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q4_view_strength", 5, false, new { disabled = "disabled" })</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">5.	There is a career pathway strategy in place statewide which aligns employment, training, education and supportive services for under-skilled persons especially those with barriers to employment, so that they can accelerate their acquisition of in demand skills and increase their recognized post-secondary credentials.</td>
+                    <td><label>@Html.RadioButton("s1q5_view_strength", 1, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q5_view_strength", 2, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q5_view_strength", 3, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q5_view_strength", 4, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q5_view_strength", 5, false, new { disabled = "disabled" })</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">6.	Work-based learning opportunities with employers including on-the-job training, internships, pre-apprenticeships and Registered Apprenticeships are offered statewide as training paths to skilled employment.</td>
+                    <td><label>@Html.RadioButton("s1q6_view_strength", 1, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q6_view_strength", 2, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q6_view_strength", 3, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q6_view_strength", 4, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q6_view_strength", 5, false, new { disabled = "disabled" })</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">7.	There is a customer engagement plan for effective and coordinated outreach which breaks down barriers to accessing workforce development services for all individual and employer customers based on the state’s identified vision and goals.</td>
+                    <td><label>@Html.RadioButton("s1q7_view_strength", 1, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q7_view_strength", 2, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q7_view_strength", 3, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q7_view_strength", 4, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q7_view_strength", 5, false, new { disabled = "disabled" })</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">8.	There is a comprehensive cross-agency data and performance management system in place that covers at a minimum the WIOA Core required programs – Adult, Dislocated Worker, Youth, Wagner-Peyser, Adult Basic Education, and Vocational Rehabilitation.</td>
+                    <td><label>@Html.RadioButton("s1q8_view_strength", 1, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q8_view_strength", 2, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q8_view_strength", 3, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q8_view_strength", 4, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q8_view_strength", 5, false, new { disabled = "disabled" })</label></td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+
+    <div id="section-1-trigger-na" class="section-view">
+        <div style="float:left;" id="section-1-na-summary">You indicated that 0% (0 of 0) indicators are areas of N/A</div>
+        <div style="float:right;">
+            <img src="~/images/expand.png" align="middle" hspace="4" alt="Show Indicators" style="margin-top:-10px;">
+            <a href="#" onclick="return false;">show indicators</a>
+        </div>
+    </div>
+    <div id="section-1-view-strength" style="display:none;">
+        <div id="S1Q1_view_na">
+            <h3>
+                A.	CONTINUOUS IMPROVEMENT AND STRATEGIC DEVELOPMENT
+            </h3>
+
+            <table>
+                <tr>
+                    <td></td>
+                    <td>Strongly Disagree</td>
+                    <td>Disagree</td>
+                    <td>Neither Disagree or Agree</td>
+                    <td>Agree</td>
+                    <td>Strongly Agree</td>
+                </tr>
+                <tr>
+                    <td class="label-column">1.	There is a comprehensive, strategic and transformative vision   in place for your state’s workforce development system.</td>
+                    <td><label>@Html.RadioButton("s1q1_view_na", 1, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q1_view_na", 2, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q1_view_na", 3, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q1_view_na", 4, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q1_view_na", 5, false, new { disabled = "disabled" })</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">2.	There is a system wide strategic plan to implement your state’s transformative vision which sets clear expectations for how the vision will be implemented.</td>
+                    <td><label>@Html.RadioButton("s1q2_view_na", 1, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q2_view_na", 2, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q2_view_na", 3, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q2_view_na", 4, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q2_view_na", 5, false, new { disabled = "disabled" })</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">3.	The state's regional economies have been identified including inter-state regions and workforce development activities statewide align with both in demand sectors and occupations.</td>
+                    <td><label>@Html.RadioButton("s1q3_view_na", 1, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q3_view_na", 2, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q3_view_na", 3, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q3_view_na", 4, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q3_view_na", 5, false, new { disabled = "disabled" })</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">4.	Sector-based service delivery systems are in place to facilitate the development, accessibility and delivery of workforce, education and training programs which close skill gaps and respond to the talent needs of employers in targeted sectors.</td>
+                    <td><label>@Html.RadioButton("s1q4_view_na", 1, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q4_view_na", 2, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q4_view_na", 3, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q4_view_na", 4, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q4_view_na", 5, false, new { disabled = "disabled" })</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">5.	There is a career pathway strategy in place statewide which aligns employment, training, education and supportive services for under-skilled persons especially those with barriers to employment, so that they can accelerate their acquisition of in demand skills and increase their recognized post-secondary credentials.</td>
+                    <td><label>@Html.RadioButton("s1q5_view_na", 1, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q5_view_na", 2, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q5_view_na", 3, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q5_view_na", 4, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q5_view_na", 5, false, new { disabled = "disabled" })</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">6.	Work-based learning opportunities with employers including on-the-job training, internships, pre-apprenticeships and Registered Apprenticeships are offered statewide as training paths to skilled employment.</td>
+                    <td><label>@Html.RadioButton("s1q6_view_na", 1, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q6_view_na", 2, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q6_view_na", 3, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q6_view_na", 4, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q6_view_na", 5, false, new { disabled = "disabled" })</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">7.	There is a customer engagement plan for effective and coordinated outreach which breaks down barriers to accessing workforce development services for all individual and employer customers based on the state’s identified vision and goals.</td>
+                    <td><label>@Html.RadioButton("s1q7_view_na", 1, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q7_view_na", 2, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q7_view_na", 3, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q7_view_na", 4, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q7_view_na", 5, false, new { disabled = "disabled" })</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">8.	There is a comprehensive cross-agency data and performance management system in place that covers at a minimum the WIOA Core required programs – Adult, Dislocated Worker, Youth, Wagner-Peyser, Adult Basic Education, and Vocational Rehabilitation.</td>
+                    <td><label>@Html.RadioButton("s1q8_view_na", 1, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q8_view_na", 2, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q8_view_na", 3, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q8_view_na", 4, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s1q8_view_na", 5, false, new { disabled = "disabled" })</label></td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+
+
+    <div id="section-2-view" class="section-view">
+        <div style="float:left;">B.	SYSTEM CAPACITY BUILDING</div>
+        <div style="float:right;">
+            <img src="~/images/expand.png" align="middle" hspace="4" alt="Show Indicators">
+            <a href="#" onclick="return false;">show indicators</a>
+        </div>
+    </div>
+    <div id="section-2-trigger-action" class="section-view">
+        <div style="float:left;" id="section-2-action-summary">You indicated that 0% (0 of 0) indicators are areas of action</div>
+        <div style="float:right;">
+            <img src="~/images/expand.png" align="middle" hspace="4" alt="Show Indicators" style="margin-top:-10px;">
+            <a href="#" onclick="return false;">show indicators</a>
+        </div>
+    </div>
+    <div id="section-2-view-action" style="display:none;">
+
+        <div id="S2Q1_view">
+            <h3>
+                B.	SYSTEM CAPACITY BUILDING
+            </h3>
+
+            <table>
+                <tr>
+                    <td></td>
+                    <td>Strongly Disagree</td>
+                    <td>Disagree</td>
+                    <td>Neither Disagree or Agree</td>
+                    <td>Agree</td>
+                    <td>Strongly Agree</td>
+                </tr>
+                <tr>
+                    <td class="label-column">1.	Staff training is in place to increase the skills and knowledge   of all staff in the workforce development system and ensure that staff have the skills for their new roles in a transformed system. </td>
+                    <td><label>@Html.RadioButton("s2q1_view", 1, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s2q1_view", 2, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s2q1_view", 3, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s2q1_view", 4, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s2q1_view", 5, false, new { disabled = "disabled" })</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">2.	A system for the identification and dissemination of best practices for meeting the needs of employers, workers and jobseekers is in place throughout the statewide system and all of its program partners.</td>
+                    <td><label>@Html.RadioButton("s2q2_view", 1, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s2q2_view", 2, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s2q2_view", 3, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s2q2_view", 4, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s2q2_view", 5, false, new { disabled = "disabled" })</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">3.	Business services and service delivery strategies are coordinated state wide across all of the program partners and measures of effectiveness are in place.</td>
+                    <td><label>@Html.RadioButton("s2q3_view", 1, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s2q3_view", 2, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s2q3_view", 3, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s2q3_view", 4, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s2q3_view", 5, false, new { disabled = "disabled" })</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">4.	Objective criteria are in place for assessing the effectiveness of and continuous improvement of One-Stops statewide.</td>
+                    <td><label>@Html.RadioButton("s2q4_view", 1, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s2q4_view", 2, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s2q4_view", 3, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s2q4_view", 4, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s2q4_view", 5, false, new { disabled = "disabled" })</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">5.	Policies are in place identifying the appropriate roles and contribution of resources for all of the required One-Stop program partners under WIOA.</td>
+                    <td><label>@Html.RadioButton("s2q5_view", 1, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s2q5_view", 2, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s2q5_view", 3, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s2q5_view", 4, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s2q5_view", 5, false, new { disabled = "disabled" })</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">6.	Effective local boards are supported by state policies to enable outstanding success, to sustain fiscal integrity and to perform all other local board activities with measurable effectiveness.</td>
+                    <td><label>@Html.RadioButton("s2q6_view", 1, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s2q6_view", 2, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s2q6_view", 3, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s2q6_view", 4, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s2q6_view", 5, false, new { disabled = "disabled" })</label></td>
+                </tr>
+            </table>
+        </div>
+
+
+    </div>
+
+    <div id="section-2-trigger-strength" class="section-view">
+        <div style="float:left;" id="section-2-strength-summary">You indicated that 0% (0 of 0) indicators are areas of action</div>
+        <div style="float:right;">
+            <img src="~/images/expand.png" align="middle" hspace="4" alt="Show Indicators" style="margin-top:-10px;">
+            <a href="#" onclick="return false;">show indicators</a>
+        </div>
+    </div>
+
+    <div id="section-2-view-strength" style="display:none;">
+
+        <div id="S2Q1_view_strength">
+            <h3>
+                B.	SYSTEM CAPACITY BUILDING
+            </h3>
+
+            <table>
+                <tr>
+                    <td></td>
+                    <td>Strongly Disagree</td>
+                    <td>Disagree</td>
+                    <td>Neither Disagree or Agree</td>
+                    <td>Agree</td>
+                    <td>Strongly Agree</td>
+                </tr>
+                <tr>
+                    <td class="label-column">1.	Staff training is in place to increase the skills and knowledge   of all staff in the workforce development system and ensure that staff have the skills for their new roles in a transformed system. </td>
+                    <td><label>@Html.RadioButton("s2q1_view_strength", 1, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s2q1_view_strength", 2, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s2q1_view_strength", 3, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s2q1_view_strength", 4, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s2q1_view_strength", 5, false, new { disabled = "disabled" })</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">2.	A system for the identification and dissemination of best practices for meeting the needs of employers, workers and jobseekers is in place throughout the statewide system and all of its program partners.</td>
+                    <td><label>@Html.RadioButton("s2q2_view_strength", 1, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s2q2_view_strength", 2, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s2q2_view_strength", 3, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s2q2_view_strength", 4, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s2q2_view_strength", 5, false, new { disabled = "disabled" })</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">3.	Business services and service delivery strategies are coordinated state wide across all of the program partners and measures of effectiveness are in place.</td>
+                    <td><label>@Html.RadioButton("s2q3_view_strength", 1, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s2q3_view_strength", 2, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s2q3_view_strength", 3, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s2q3_view_strength", 4, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s2q3_view_strength", 5, false, new { disabled = "disabled" })</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">4.	Objective criteria are in place for assessing the effectiveness of and continuous improvement of One-Stops statewide.</td>
+                    <td><label>@Html.RadioButton("s2q4_view_strength", 1, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s2q4_view_strength", 2, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s2q4_view_strength", 3, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s2q4_view_strength", 4, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s2q4_view_strength", 5, false, new { disabled = "disabled" })</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">5.	Policies are in place identifying the appropriate roles and contribution of resources for all of the required One-Stop program partners under WIOA.</td>
+                    <td><label>@Html.RadioButton("s2q5_view_strength", 1, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s2q5_view_strength", 2, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s2q5_view_strength", 3, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s2q5_view_strength", 4, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s2q5_view_strength", 5, false, new { disabled = "disabled" })</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">6.	Effective local boards are supported by state policies to enable outstanding success, to sustain fiscal integrity and to perform all other local board activities with measurable effectiveness.</td>
+                    <td><label>@Html.RadioButton("s2q6_view_strength", 1, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s2q6_view_strength", 2, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s2q6_view_strength", 3, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s2q6_view_strength", 4, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s2q6_view_strength", 5, false, new { disabled = "disabled" })</label></td>
+                </tr>
+            </table>
+        </div>
+
+
+    </div>
+
+    <div id="section-2-trigger-na" class="section-view">
+        <div style="float:left;" id="section-2-na-summary">You indicated that 0% (0 of 0) indicators are areas of action</div>
+        <div style="float:right;">
+            <img src="~/images/expand.png" align="middle" hspace="4" alt="Show Indicators" style="margin-top:-10px;">
+            <a href="#" onclick="return false;">show indicators</a>
+        </div>
+    </div>
+
+    <div id="section-3-trigger" class="section-view">
+        <div style="float:left;">C.	SYSTEM ALIGNMENT AND EFFECTIVE OPERATIONS</div>
+        <div style="float:right;">
+            <img src="~/images/expand.png" align="middle" hspace="4" alt="Show Indicators">
+            <a href="#" onclick="return false;">show indicators</a>
+        </div>
+    </div>
+    <div id="section-3-view" style="display:none;">
+
+        <div id="S3Q1_view">
+            <h3>
+                C.	SYSTEM ALIGNMENT AND EFFECTIVE OPERATIONS
+            </h3>
+            <p>
+                Under WIOA, a governor is required to either establish a new State Workforce Development Board (WDB) or designate a board established prior to August 7, 1998 to serve as the state’s Workforce Development Board. WIOA continues the practice of a Governor appointed Chair from the business members of the WDB.
+            </p>
+
+            <table>
+                <tr>
+                    <td></td>
+                    <td>Strongly Disagree</td>
+                    <td>Disagree</td>
+                    <td>Neither Disagree or Agree</td>
+                    <td>Agree</td>
+                    <td>Strongly Agree</td>
+                </tr>
+                <tr>
+                    <td class="label-column">1.	Statewide strategies are in place for technological improvements focused on increasing customers digital literacy, increasing access to online services and insuring that technology-based services are accessible to individuals with disabilities and individuals without private access to technology.</td>
+                    <td><label>@Html.RadioButton("s3q1_view", 1, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s3q1_view", 2, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s3q1_view", 3, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s3q1_view", 4, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s3q1_view", 5, false, new { disabled = "disabled" })</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">2.	Integrated data systems are in place across One-Stop partners to increase use of common intake and data collection across all One-Stop program partners to maximize the effectiveness of the system for all customers.</td>
+                    <td><label>@Html.RadioButton("s3q2_view", 1, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s3q2_view", 2, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s3q2_view", 3, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s3q2_view", 4, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s3q2_view", 5, false, new { disabled = "disabled" })</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">3.	Integrated data systems are in place across One-Stop partners to inform policy, track progress and measure success.</td>
+                    <td><label>@Html.RadioButton("s3q3_view", 1, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s3q3_view", 2, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s3q3_view", 3, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s3q3_view", 4, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s3q3_view", 5, false, new { disabled = "disabled" })</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">4.	The state has a policy infrastructure in place to support all required activities such as resource allocations and reporting for all program activities required under WIOA.</td>
+                    <td><label>@Html.RadioButton("s3q4_view", 1, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s3q4_view", 2, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s3q4_view", 3, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s3q4_view", 4, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s3q4_view", 5, false, new { disabled = "disabled" })</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">5.	The state’s Labor Market Information system provides real time and user friendly, labor market information on a statewide, local and regional basis.</td>
+                    <td><label>@Html.RadioButton("s3q5_view", 1, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s3q5_view", 2, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s3q5_view", 3, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s3q5_view", 4, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s3q5_view", 5, false, new { disabled = "disabled" })</label></td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+
+    <div id="section-4-trigger" class="section-view">
+        <div style="float:left;">D.	STATE WORKFORCE BOARD MEMBERSHIP</div>
+        <div style="float:right;">
+            <img src="~/images/expand.png" align="middle" hspace="4" alt="Show Indicators">
+            <a href="#" onclick="return false;">show indicators</a>
+        </div>
+    </div>
+    <div id="section-4-view" style="display:none;">
+
+        <div id="S4Q1_view">
+            <h3>
+                D.	STATE WORKFORCE BOARD MEMBERSHIP
+            </h3>
+
+            <table>
+                <tr>
+                    <td></td>
+                    <td>Strongly Disagree</td>
+                    <td>Disagree</td>
+                    <td>Neither Disagree or Agree</td>
+                    <td>Agree</td>
+                    <td>Strongly Agree</td>
+                </tr>
+
+                <tr>
+                    <td class="label-column">1.	Members of the State Board represent diverse geographic areas of the state including rural, urban and suburban.</td>
+                    <td><label>@Html.RadioButton("s4q1_view", 1, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s4q1_view", 2, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s4q1_view", 3, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s4q1_view", 4, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s4q1_view", 5, false, new { disabled = "disabled" })</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">2.	A member of each chamber of the State Legislature is appointed by the appropriate presiding officer of that Legislative Chamber.</td>
+                    <td><label>@Html.RadioButton("s4q2_view", 1, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s4q2_view", 2, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s4q2_view", 3, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s4q2_view", 4, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s4q2_view", 5, false, new { disabled = "disabled" })</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">3.	Business members comprise at least 51% of State Board membership – and are business owners, or other executives or employers including small businesses and representatives of employment that at a minimum include high quality, work relevant training and development in in-demand industry sectors or occupations in the state.</td>
+                    <td><label>@Html.RadioButton("s4q3_view", 1, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s4q3_view", 2, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s4q3_view", 3, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s4q3_view", 4, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s4q3_view", 5, false, new { disabled = "disabled" })</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">4.	Workforce representative comprise at least 20% of State Board membership – and include representatives of labor organizations nominated by state labor federations and a representative from a joint labor-management apprenticeship program or if none exists, a representative of an apprenticeship program in the state.</td>
+                    <td><label>@Html.RadioButton("s4q4_view", 1, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s4q4_view", 2, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s4q4_view", 3, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s4q4_view", 4, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s4q4_view", 5, false, new { disabled = "disabled" })</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">5.	Lead State Officials with primary responsibility for the Core Programs are members of the State Board.</td>
+                    <td><label>@Html.RadioButton("s4q5_view", 1, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s4q5_view", 2, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s4q5_view", 3, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s4q5_view", 4, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s4q5_view", 5, false, new { disabled = "disabled" })</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">6.	Chief elected officials collectively representing both cities/ counties are members of the State Board.</td>
+                    <td><label>@Html.RadioButton("s4q6_view", 1, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s4q6_view", 2, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s4q6_view", 3, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s4q6_view", 4, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s4q6_view", 5, false, new { disabled = "disabled" })</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">7.	The State Board does not contain any representative of multiple categories.</td>
+                    <td><label>@Html.RadioButton("s4q7_view", 1, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s4q7_view", 2, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s4q7_view", 3, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s4q7_view", 4, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s4q7_view", 5, false, new { disabled = "disabled" })</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">8.	Representatives of community-based organizations are members of the State Board, including those with experience with individuals with barriers to employment, those that serve veterans or those that provide competitive, integrated employment for individuals with disabilities, those that serve out-of-school youth.</td>
+                    <td><label>@Html.RadioButton("s4q8_view", 1, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s4q8_view", 2, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s4q8_view", 3, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s4q8_view", 4, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s4q8_view", 5, false, new { disabled = "disabled" })</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">9.	Governor-designated state agency officials from agencies that are One-Stop partners whose programs are covered by the State Plan not including officials responsible for WIA  Youth, Adult and Dislocated Worker, Adult Basic Education, Wagner-Peyser or Vocational Rehabilitation  Programs are members of the State Board.</td>
+                    <td><label>@Html.RadioButton("s4q9_view", 1, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s4q9_view", 2, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s4q9_view", 3, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s4q9_view", 4, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s4q9_view", 5, false, new { disabled = "disabled" })</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column"> 10. state agency officials responsible for economic development are members of the state board.</td>
+                    <td><label>@Html.RadioButton("s4q10_view", 1, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s4q10_view", 2, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s4q10_view", 3, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s4q10_view", 4, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s4q10_view", 5, false, new { disabled = "disabled" })</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">11. State agency officials responsible for juvenile justice are members of the State Board.</td>
+                    <td><label>@Html.RadioButton("s4q11_view", 1, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s4q11_view", 2, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s4q11_view", 3, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s4q11_view", 4, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s4q11_view", 5, false, new { disabled = "disabled" })</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">12. Individuals who represent an Indian tribe or tribal organization are members of the State Board.</td>
+                    <td><label>@Html.RadioButton("s4q12_view", 1, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s4q12_view", 2, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s4q12_view", 3, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s4q12_view", 4, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s4q12_view", 5, false, new { disabled = "disabled" })</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">13. State agency officials responsible for education programs including chief executive officers of community colleges and other institutions of higher education are members of the State Board.</td>
+                    <td><label>@Html.RadioButton("s4q13_view", 1, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s4q13_view", 2, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s4q13_view", 3, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s4q13_view", 4, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s4q13_view", 5, false, new { disabled = "disabled" })</label></td>
+                </tr>
+
+            </table>
+        </div>
+
+    </div>
+
+
+    <div id="section-5-trigger" class="section-view">
+        <div style="float:left;">E.	UNIFIED AND COMBINED STATE PLANS</div>
+        <div style="float:right;">
+            <img src="~/images/expand.png" align="middle" hspace="4" alt="Show Indicators">
+            <a href="#" onclick="return false;">show indicators</a>
+        </div>
+    </div>
+    <div id="section-5-view" style="display:none;">
+
+        <div id="S5Q1_view">
+            <h3>
+                E.	UNIFIED AND COMBINED STATE PLANS
+            </h3>
+            <p>
+                Under WIOA Your State Workforce Development Board must be prepared to assist the Governor to manage the development and implementation of the four year plan due on March 1, 2016 as well as a two year timeline for the modification of the State Plan. WIOA State Plans will be approved jointly by the US Secretaries of Labor and Education.  The WIOA State Plan will identify how the State will meet the identified skills needs of workers, job seekers and employers and must be a strategic and transformative plan for a comprehensive and streamlined workforce development statewide system as well as for the development and continuous improvement of the system. The state plan should clearly address WIOA’s emphasis on strengthening existing workforce development and adult education programs to create a much more integrated and connected system which  improves services to adults and youth with barriers to economic success.
+            </p>
+
+            <table>
+                <tr>
+                    <td></td>
+                    <td>Strongly Disagree</td>
+                    <td>Disagree</td>
+                    <td>Neither Disagree or Agree</td>
+                    <td>Agree</td>
+                    <td>Strongly Agree</td>
+                </tr>
+
+                <tr>
+                    <td class="label-column">1.	Comprehensive and inclusive program and community partnerships are in place to ensure that the state’s planning process includes broad and authentic participation of all stakeholders and creates an actionable plan to implement the state’s vision and strategic goals.</td>
+                    <td><label>@Html.RadioButton("s5q1_view", 1, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s5q1_view", 2, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s5q1_view", 3, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s5q1_view", 4, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s5q1_view", 5, false, new { disabled = "disabled" })</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">2.	My state is prepared to develop a four year Unified State Plan by March 2016 which includes the required Core Partners.</td>
+                    <td><label>@Html.RadioButton("s5q2_view", 1, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s5q2_view", 2, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s5q2_view", 3, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s5q2_view", 4, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s5q2_view", 5, false, new { disabled = "disabled" })</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">3.	My state is prepared to develop a four year Combined State Plan by March 2016 which includes the required Core Partners and one or more additional federal programs.</td>
+                    <td><label>@Html.RadioButton("s5q3_view", 1, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s5q3_view", 2, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s5q3_view", 3, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s5q3_view", 4, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s5q3_view", 5, false, new { disabled = "disabled" })</label></td>
+                </tr>
+
+            </table>
+        </div>
+
+    </div>
+
+    <div id="section-6-trigger" class="section-view">
+        <div style="float:left;">F.	MEMORANDUMS OF UNDERSTANDING</div>
+        <div style="float:right;">
+            <img src="~/images/expand.png" align="middle" hspace="4" alt="Show Indicators">
+            <a href="#" onclick="return false;">show indicators</a>
+        </div>
+    </div>
+    <div id="section-6-view" style="display:none;">
+
+        <div id="S6Q1_view">
+            <h3>
+                F.	MEMORANDUMS OF UNDERSTANDING
+            </h3>
+            <p>
+                In order to ensure that services provided across the programs in One-Stop centers are coordinated and integrated, Memorandums of Understanding (MOUs) are required between program partners in WIOA.
+            </p>
+
+            <table>
+                <tr>
+                    <td></td>
+                    <td>Strongly Disagree</td>
+                    <td>Disagree</td>
+                    <td>Neither Disagree or Agree</td>
+                    <td>Agree</td>
+                    <td>Strongly Agree</td>
+                </tr>
+
+                <tr>
+                    <td class="label-column">1.	Services to be provided through the One-Stop delivery system are outlined.</td>
+                    <td><label>@Html.RadioButton("s6q1_view", 1, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s6q1_view", 2, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s6q1_view", 3, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s6q1_view", 4, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s6q1_view", 5, false, new { disabled = "disabled" })</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">2.	How the cost of the services and operating costs will be funded is identified.</td>
+                    <td><label>@Html.RadioButton("s6q2_view", 1, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s6q2_view", 2, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s6q2_view", 3, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s6q2_view", 4, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s6q2_view", 5, false, new { disabled = "disabled" })</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">3.	Methods of referral to individuals between the One-Stop operator and the One-Stop partners for services and activities are clearly laid out.</td>
+                    <td><label>@Html.RadioButton("s6q3_view", 1, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s6q3_view", 2, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s6q3_view", 3, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s6q3_view", 4, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s6q3_view", 5, false, new { disabled = "disabled" })</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">4.	Duration of the MOU is defined.</td>
+                    <td><label>@Html.RadioButton("s6q4_view", 1, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s6q4_view", 2, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s6q4_view", 3, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s6q4_view", 4, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s6q4_view", 5, false, new { disabled = "disabled" })</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">5.	Methods to ensure that the needs of individuals with barriers to employment are addressed are clear.</td>
+                    <td><label>@Html.RadioButton("s6q5_view", 1, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s6q5_view", 2, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s6q5_view", 3, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s6q5_view", 4, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s6q5_view", 5, false, new { disabled = "disabled" })</label></td>
+                </tr>
+                <tr>
+                    <td class="label-column">6.	Procedures for amending and assurances that the MOU will be reviewed at least once every two years are in place.</td>
+                    <td><label>@Html.RadioButton("s6q6_view", 1, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s6q6_view", 2, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s6q6_view", 3, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s6q6_view", 4, false, new { disabled = "disabled" })</label></td>
+                    <td><label>@Html.RadioButton("s6q6_view", 5, false, new { disabled = "disabled" })</label></td>
+                </tr>
+
+            </table>
+        </div>
+
+    </div>
+
+</div>

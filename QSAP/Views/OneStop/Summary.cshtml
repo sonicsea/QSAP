@@ -1,0 +1,521 @@
+﻿@{
+    ViewBag.Title = "Summary";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Scripts.Render("~/Scripts/jquery-ui.js")
+@Styles.Render("~/Content/jquery-ui.css")
+<style>
+    input[type="radio"] {
+        width: 20px;
+    }
+
+    td {
+        text-align: center;
+    }
+
+        td.label-column {
+            text-align: left;
+        }
+
+    div.ui-dialog-buttonpane {
+        display: none;
+    }
+</style>
+
+<script>
+    $(document).ready(function () {
+        $(".section-view").click(function () {
+
+            var accordion_id = $(this).attr("itemid");
+            var trigger_id = $(this).attr("id");
+
+            //alert($('#' + id).css('display'));
+            if ($('#' + accordion_id).css('display') == 'none') {
+                $('#' + accordion_id).slideDown();
+                $('#' + trigger_id + " a").html("hide indicators");
+                $('#' + trigger_id + " img").attr("src", '@Url.Content("~/images/collapse.png")');
+            }
+            else {
+                $('#' + accordion_id).slideUp();
+                $('#' + trigger_id + " a").html("show indicators");
+                $('#' + trigger_id + " img").attr("src", '@Url.Content("~/images/expand.png")');
+            }
+
+        });
+
+        $("#dialog-message").dialog({
+            dialogClass: "no-close",
+            autoOpen: false,
+            modal: true,
+            width: "25%",
+            maxWidth: "768px"
+        });
+        $(".ui-dialog-titlebar").hide();
+    });
+    function emailDialog() {
+        $("#dialog-message").dialog("open");
+    }
+
+    function closeDialog() {
+        $("#dialog-message").dialog("close");
+    }
+</script>
+
+@model QSAP.ViewModels.SummaryViewModel
+
+@using (Html.BeginForm("DownloadPDF", "OneStop", FormMethod.Post))
+{
+    <h1 style="color:orange;">Congratulations!</h1>
+    <div style="height:120px;border-bottom: solid 2px lightgray;">
+        <div style="float:left; width:50%;"><h3>You have finished the questionnaire portion of Parnership QSAP.</h3></div>
+        <div style="float:right; width:40%;">
+            <input type="submit" value="DOWNLOAD PDF" name="action:Download" />
+            <input type="button" value="EMAIL IT TO YOU" onclick="emailDialog()" />
+        </div>
+    </div>
+
+    <p>
+        Below are your assessment results, which provide a summary of your answers to questions in each QSAP section. You may click on the "show indicators" links to see how you responded to particular questions
+        and indicators in each section. In addition, clicking on the "show resources" links for each section will provide you with a customized list of resources to help you strengthen areas of you OJT
+        efforts in which you may need additional assistance or support. You may use these results and the corresponding resources to prioritize area of focus for your OJT expansion and enhancement efforts.
+    </p>
+
+
+    foreach (var section in Model.sections)
+    {
+        var sectionNum = section.Number;
+        var sectionName = section.Name;
+
+        var total_question = 0;
+        var total_indicator = 0;
+        var questions_with_indicator = 0;
+        var total_action = 0;
+        var total_strength = 0;
+        var total_na = 0;
+
+
+        foreach (var q in Model.questions)
+        {
+            if (q.Section_ID == section.Id)
+            {
+                total_question++;
+
+                if (q.Indicators.Count() > 0)
+                {
+                    questions_with_indicator++;
+                }
+
+                foreach (var ind in q.Indicators)
+                {
+                    total_indicator++;
+
+                    if (Session["UserInputI"] != null)
+                    {
+                        var total_indicatorSets = (Dictionary<string, string>)Session["UserInputI"];
+                        if (total_indicatorSets.ContainsKey("I" + ind.Id))
+                        {
+                            if (Convert.ToInt32(total_indicatorSets["I" + ind.Id]) > 0 && Convert.ToInt32(total_indicatorSets["I" + ind.Id]) <= 3)
+                            {
+                                total_action++;
+                            }
+                            else if (Convert.ToInt32(total_indicatorSets["I" + ind.Id]) > 3)
+                            {
+                                total_strength++;
+                            }
+                            else
+                            {
+                                total_na++;
+                            }
+                        }
+
+                    }
+                }
+
+                if (Session["UserInputQ"] != null)
+                {
+                    var total_questionSets = (Dictionary<string, string>)Session["UserInputQ"];
+                    if (total_questionSets.ContainsKey("Q" + q.Id))
+                    {
+                        if (Convert.ToInt32(total_questionSets["Q" + q.Id]) > 0 && Convert.ToInt32(total_questionSets["Q" + q.Id]) <= 3)
+                        {
+                            total_action++;
+                        }
+                        else if (Convert.ToInt32(total_questionSets["Q" + q.Id]) > 3)
+                        {
+                            total_strength++;
+                        }
+                        else
+                        {
+                            total_na++;
+                        }
+                    }
+                }
+
+
+
+            }
+
+        }
+
+        var total = total_indicator + total_question - questions_with_indicator;
+
+        decimal action_ratio = Math.Round((decimal)total_action / (decimal)total, 2) * 100;
+        decimal strength_ratio = Math.Round((decimal)total_strength / (decimal)total, 2) * 100;
+        decimal na_ratio = Math.Round((decimal)total_na / (decimal)total, 2) * 100;
+
+
+        <div class="section-view-header">
+            <div style="float:left;">Section @sectionNum: @sectionName</div>
+        </div>
+
+        <div id="section-@sectionNum-trigger-action" class="section-view" itemid="section-@sectionNum-action">
+            <div style="float:left;">You indicated that @action_ratio.ToString().Split('.')[0]% (@total_action of @total) indicators are areas of action</div>
+            <div style="float:right;">
+                <img src="~/images/expand.png" align="middle" hspace="4" alt="Show Indicators" style="margin-top:-10px;">
+                <a href="#" onclick="return false;">show indicators</a>
+            </div>
+        </div>
+        <div id="section-@sectionNum-action" style="display:none;">
+            <table>
+                <tr>
+                    <td></td>
+
+                    @foreach (var r in Model.ratings)
+                    {
+                        <td>@r.Text</td>
+                    }
+
+                </tr>
+
+                @if (Session["UserInputQ"] != null)
+                {
+                    foreach (var question in Model.questions)
+                    {
+                        if (question.Indicators.Count() > 0 && question.Section_ID == section.Id)
+                        {
+                            if (Session["UserInputI"] != null)
+                            {
+                                var i = 0;
+                                foreach (var ind in question.Indicators)
+                                {
+                                    var indicatorSets = (Dictionary<string, string>)Session["UserInputI"];
+                                    var iKey = "I" + ind.Id.ToString();
+
+                                    if (indicatorSets.ContainsKey(iKey))
+                                    {
+                                        var selectedValue = Convert.ToInt32(indicatorSets[iKey]);
+
+                                        if (selectedValue <= 3 && selectedValue > 0)
+                                        {
+                                            i++;
+                                            if (i == 1)
+                                            {
+                                                <tr>
+                                                    <td class="label-column" colspan="6">@Html.Raw(question.Number + ". " + question.Text)</td>
+                                                </tr>
+                                            }
+                                            <tr>
+                                                <td class="label-column">@ind.Text</td>
+                                                @foreach (var r in Model.ratings)
+                                                {
+                                                    if (r.Value.ToString() == selectedValue.ToString())
+                                                    {
+                                                        <td>@Html.RadioButton(iKey, r.Value, true, new { disabled = "disabled" })</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>@Html.RadioButton(iKey, r.Value, false, new { disabled = "disabled" })</td>
+                                                    }
+
+
+                                                }
+                                            </tr>
+                                        }
+                                    }
+
+                                }
+
+
+                            }
+                        }
+                        else
+                        {
+                            var questionSets = (Dictionary<string, string>)Session["UserInputQ"];
+                            var key = "Q" + question.Id.ToString();
+
+                            if (questionSets.ContainsKey(key) && question.Section_ID == section.Id)
+                            {
+                                var selectedValue = Convert.ToInt32(questionSets[key]);
+
+                                if (selectedValue <= 3 && selectedValue > 0)
+                                {
+                                    <tr>
+                                        <td class="label-column">@question.Number . @question.Text</td>
+                                        @foreach (var r in Model.ratings)
+                                        {
+                                            if (r.Value.ToString() == selectedValue.ToString())
+                                            {
+                                                <td>@Html.RadioButton(key, r.Value, true, new { disabled = "disabled" })</td>
+                                            }
+                                            else
+                                            {
+                                                <td>@Html.RadioButton(key, r.Value, false, new { disabled = "disabled" })</td>
+                                            }
+
+
+                                        }
+                                    </tr>
+                                }
+
+                            }
+                        }
+
+
+                    }
+                }
+
+            </table>
+
+        </div>
+
+
+
+        <div id="section-@sectionNum-trigger-strength" class="section-view" itemid="section-@sectionNum-strength">
+            <div style="float:left;">You indicated that @strength_ratio.ToString().Split('.')[0]% (@total_strength of @total) indicators are areas of strength</div>
+            <div style="float:right;">
+                <img src="~/images/expand.png" align="middle" hspace="4" alt="Show Indicators" style="margin-top:-10px;">
+                <a href="#" onclick="return false;">show indicators</a>
+            </div>
+        </div>
+        <div id="section-@sectionNum-strength" style="display:none;">
+            <table>
+                <tr>
+                    <td></td>
+
+                    @foreach (var r in Model.ratings)
+                    {
+                        <td>@r.Text</td>
+                    }
+
+                </tr>
+
+                @if (Session["UserInputQ"] != null)
+                {
+                    foreach (var question in Model.questions)
+                    {
+                        if (question.Indicators.Count() > 0 && question.Section_ID == section.Id)
+                        {
+                            if (Session["UserInputI"] != null)
+                            {
+                                var i = 0;
+                                foreach (var ind in question.Indicators)
+                                {
+                                    var indicatorSets = (Dictionary<string, string>)Session["UserInputI"];
+                                    var iKey = "I" + ind.Id.ToString();
+
+                                    if (indicatorSets.ContainsKey(iKey))
+                                    {
+                                        var selectedValue = Convert.ToInt32(indicatorSets[iKey]);
+
+                                        if (selectedValue > 3)
+                                        {
+                                            i++;
+                                            if (i == 1)
+                                            {
+                                                <tr>
+                                                    <td class="label-column" colspan="6">@Html.Raw(question.Number + ". " + question.Text)</td>
+                                                </tr>
+                                            }
+                                            <tr>
+                                                <td class="label-column">@ind.Text</td>
+                                                @foreach (var r in Model.ratings)
+                                                {
+                                                    if (r.Value.ToString() == selectedValue.ToString())
+                                                    {
+                                                        <td>@Html.RadioButton(iKey, r.Value, true, new { disabled = "disabled" })</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>@Html.RadioButton(iKey, r.Value, false, new { disabled = "disabled" })</td>
+                                                    }
+
+
+                                                }
+                                            </tr>
+                                        }
+                                    }
+
+                                }
+
+
+                            }
+                        }
+                        else
+                        {
+                            var questionSets = (Dictionary<string, string>)Session["UserInputQ"];
+                            var key = "Q" + question.Id.ToString();
+
+                            if (questionSets.ContainsKey(key) && question.Section_ID == section.Id)
+                            {
+                                var selectedValue = Convert.ToInt32(questionSets[key]);
+
+                                if (selectedValue > 3)
+                                {
+                                    <tr>
+                                        <td class="label-column">@question.Number . @question.Text</td>
+                                        @foreach (var r in Model.ratings)
+                                        {
+                                            if (r.Value.ToString() == selectedValue.ToString())
+                                            {
+                                                <td>@Html.RadioButton(key, r.Value, true, new { disabled = "disabled" })</td>
+                                            }
+                                            else
+                                            {
+                                                <td>@Html.RadioButton(key, r.Value, false, new { disabled = "disabled" })</td>
+                                            }
+
+
+                                        }
+                                    </tr>
+                                }
+
+                            }
+                        }
+
+
+                    }
+                }
+
+            </table>
+
+        </div>
+
+        <div id="section-@sectionNum-trigger-na" class="section-view" itemid="section-@sectionNum-na">
+            <div style="float:left;">You indicated that @na_ratio.ToString().Split('.')[0]% (@total_na of @total) indicators are areas of N/A</div>
+            <div style="float:right;">
+                <img src="~/images/expand.png" align="middle" hspace="4" alt="Show Indicators" style="margin-top:-10px;">
+                <a href="#" onclick="return false;">show indicators</a>
+            </div>
+        </div>
+        <div id="section-@sectionNum-na" style="display:none;">
+            <table>
+                <tr>
+                    <td></td>
+
+                    @foreach (var r in Model.ratings)
+                    {
+                        <td>@r.Text</td>
+                    }
+
+                </tr>
+
+                @if (Session["UserInputQ"] != null)
+                {
+
+                    foreach (var question in Model.questions)
+                    {
+
+                        if (question.Indicators.Count() > 0 && question.Section_ID == section.Id)
+                        {
+                            if (Session["UserInputI"] != null)
+                            {
+                                var i = 0;
+                                foreach (var ind in question.Indicators)
+                                {
+                                    var indicatorSets = (Dictionary<string, string>)Session["UserInputI"];
+                                    var iKey = "I" + ind.Id.ToString();
+
+                                    if (indicatorSets.ContainsKey(iKey))
+                                    {
+                                        var selectedValue = Convert.ToInt32(indicatorSets[iKey]);
+
+                                        if (selectedValue < 1)
+                                        {
+
+                                            i++;
+                                            if (i == 1)
+                                            {
+                                                <tr>
+                                                    <td class="label-column" colspan="6">@Html.Raw(question.Number + ". " + question.Text)</td>
+                                                </tr>
+                                            }
+                                            <tr>
+                                                <td class="label-column">@ind.Text</td>
+                                                @foreach (var r in Model.ratings)
+                                                {
+                                                    if (r.Value.ToString() == selectedValue.ToString())
+                                                    {
+                                                        <td>@Html.RadioButton(iKey, r.Value, true, new { disabled = "disabled" })</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>@Html.RadioButton(iKey, r.Value, false, new { disabled = "disabled" })</td>
+                                                    }
+
+
+                                                }
+                                            </tr>
+                                        }
+                                    }
+
+                                }
+
+
+                            }
+                        }
+                        else
+                        {
+                            var questionSets = (Dictionary<string, string>)Session["UserInputQ"];
+                            var key = "Q" + question.Id.ToString();
+
+                            if (questionSets.ContainsKey(key) && question.Section_ID == section.Id)
+                            {
+                                var selectedValue = Convert.ToInt32(questionSets[key]);
+
+                                if (selectedValue < 1)
+                                {
+                                    <tr>
+                                        <td class="label-column">@question.Number . @question.Text</td>
+                                        @foreach (var r in Model.ratings)
+                                        {
+                                            if (r.Value.ToString() == selectedValue.ToString())
+                                            {
+                                                <td>@Html.RadioButton(key, r.Value, true, new { disabled = "disabled" })</td>
+                                            }
+                                            else
+                                            {
+                                                <td>@Html.RadioButton(key, r.Value, false, new { disabled = "disabled" })</td>
+                                            }
+
+
+                                        }
+                                    </tr>
+                                }
+
+                            }
+                        }
+
+
+                    }
+                }
+
+            </table>
+
+        </div>
+    }
+
+}
+
+<div id="dialog-message" style="text-align:center;">
+    @using (Html.BeginForm("SendEmail", "OneStop", FormMethod.Post))
+    {
+        <table>
+            <tr><td>Please enter your email:</td></tr>
+            <tr><td><input type="tel" name="email" style="width:290px;" /></td></tr>
+            <tr><td><input type="submit" value="Send" /><input type="button" value="Cancel" onclick="closeDialog()" /> </td></tr>
+        </table>
+
+
+    }
+</div>

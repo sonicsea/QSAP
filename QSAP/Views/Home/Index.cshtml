@@ -1,0 +1,125 @@
+﻿@{
+    ViewBag.Title = "Home";
+}
+
+<style>
+    .who-qsap {
+        float: left;
+        width: 35%;
+        padding-right: 20px;
+    }
+
+    .how-qsap {
+        float: right;
+        width: 60%;
+    }
+
+    .ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
+        float: none !important;
+        text-align: center !important;
+    }
+
+    .ui-dialog .ui-dialog-buttonpane{
+        border:none !important;
+        padding-top:0 !important;
+    }
+</style>
+
+@Scripts.Render("~/Scripts/jquery-ui.js")
+@Styles.Render("~/Content/jquery-ui.css")
+@Styles.Render("~/Content/landing-page.css")
+
+
+<script>
+    $(document).ready(function () {
+
+        
+        $("#dialog-message").dialog({
+            dialogClass: "no-close",
+            autoOpen: false,
+            modal: true,
+            buttons: {
+                Ok: function () {
+                    $(this).dialog("close");
+                }
+            },
+            width: "25%",
+            maxWidth: "768px"
+        });
+        $(".ui-dialog-titlebar").hide();
+
+        $('.coming-soon').click(function () {
+
+            var data = "<h2 style='color:#F07F09;'>Coming Soon</h2><h4 style='color:#558abe;'>" + $(this).find('a').first().html() + "</h4><p align='left'>" + $(this).siblings('p.qsap_select_text').html() + "</p>";
+            
+            $("#dialog-message").html(data);
+
+            $("#dialog-message").dialog( "open" );
+
+        });
+    
+  });
+</script>
+
+
+
+
+<h1 id="qsap_main_header">Welcome to the WIOA Quick Start Action Planner!</h1>
+
+<p class="qsap_intro"><span>The Workforce Innovation and Opportunity Act <b>(WIOA)</b></span> presents an extraordinary opportunity for the public workforce system to transform and improve the quality of life for job seekers and workers through an integrated, job-driven system that links diverse talent to our nation’s businesses.</p>
+
+<p class="qsap_intro"><span>The WIOA Quick Start Action Planner <b>(QSAP)</b></span> is an interactive, self-paced assessment tool designed to help leaders at all levels of the public workforce system plan for this transformation and prepare for implementation of WIOA.  The QSAP will help you identify areas of strength and focused areas for improvement in your workforce system – and connect you to targeted resources that can help you to prepare and plan effectively.</p>
+
+
+<div id="qsap_questions">
+
+    <div id="qsap_who">
+        <h3>Who should use the QSAP?</h3>
+        <p>The QSAP is designed for leaders in the public workforce system at the state and local levels.  Completing the QSAP and holding a team discussion on the results will help states and local areas develop a common understanding of their readiness to implement WIOA – and jointly develop a plan to address opportunities for action.</p>
+    </div>
+
+    <div id="qsap_how">
+        <h3>How does the QSAP Series work?</h3>
+
+        <dl class="numbered_headers">
+            <dt>Select a QSAP to get started.</dt>
+            <dt>Respond to a series of statements that assess where you believe your system currently stands on each indicator.</dt>
+            <dt>Receive a report of the results and links to targeted resources.</dt>
+            <dt>Share the report and compare results in a team discussion to help align around current conditions and areas for action.</dt>
+            <dt>Develop a WIOA action plan.</dt>
+        </dl>
+
+        <p class="qsap_how_footer">Read the <a href="#">Guide to the WIOA QSAP</a> for more information on how to use this tool</p>
+    </div>
+
+</div>
+
+<h2 id="qsap_select_header">Select a QSAP to Get Started!</h2>
+
+<div id="qsap_item1">
+    <p class="qsap_select_items">@Html.ActionLink("Partnerships", "Index", "Partnerships")<a href="~/Docs/QSAP_Partnership_Assessment.pdf" class="qsap_pdf" target="_blank"></a></p>
+    <p class="qsap_select_text">Strategic partnerships and program alignment across workforce, education, economic development, business, social services, and other key programs and systems. </p>
+</div>
+
+<div id="qsap_item2">
+    <p class="qsap_select_items">
+        @Html.ActionLink("State Leadership and Governance", "Index", "Governance")<a href="~/Docs/QSAP_State Leader-Gov_20150303_CR.pdf" class="qsap_pdf" target="_blank"></a>
+    </p>
+    <p class="qsap_select_text">The critical role of strategic state workforce boards in providing leadership and governance for the public workforce system.</p>
+</div>
+
+<div id="qsap_item3">
+    <p class="qsap_select_items coming-soon"><a href="#" onclick="return false;">One-Stop Center Service Design</a><a class="qsap_pdf" target="_blank"></a></p>
+    <p class="qsap_select_text">Customer-centered and integrated service delivery through One-Stop centers that provide high quality services to job seekers and businesses.</p>
+</div>
+
+<div id="qsap_item4">
+    <p class="qsap_select_items coming-soon"><a href="#" onclick="return false;">Youth Service Strategies</a><a href="#" class="qsap_pdf" target="blank"></a></p>
+    <p class="qsap_select_text">Service delivery strategies that emphasize work-based learning opportunities and build career pathways for youth.</p>
+</div>
+
+
+
+<div id="dialog-message" style="text-align:center;">
+    
+</div>

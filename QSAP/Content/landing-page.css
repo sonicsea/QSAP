@@ -1,0 +1,218 @@
+﻿
+/* ******************************************************************	
+The <dl> tag replaces the <ol> tag in this page,
+and the <dt> tag replaces the <li> tag for ordered lists.
+****************************************************************** */	
+
+body {
+  /* This sets the auto increment for the ordered list. */  
+  counter-reset: qsap-list-counter;  
+}
+
+#qsap_how .numbered_headers dt{
+  /* This styles the text portions of the ordered list items. */  
+  padding-left: 40px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  border-bottom: #eee 1px solid;
+  }
+
+
+#qsap_how .numbered_headers dt:before {
+
+  /* Don't mess with these two tags.They increment the ordered list numbers. */
+  content: counter(qsap-list-counter);
+  counter-increment: qsap-list-counter;
+
+  /* This styles the numeric portions of the ordered list items. */	
+
+  position: absolute;
+  margin-left: -35px;
+  margin-top: -4px;
+  background: #F07F09;
+  display: inline-block;
+  height: 26px;
+  width: 19px;
+  padding-left: 7px;
+  padding-top: 0px;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 14pt;
+  color: #ffffff;
+  text-shadow: #964808 1px 1px 2px;
+  box-shadow: inset #faa64e 3px 6px 4px -2px;
+
+  }
+
+
+#qsap_main_header {
+  font-family: Tahoma,San-serif;
+  font-weight: normal;
+  font-size: 23pt;
+  border-bottom: #558abe 5px solid;
+  text-align: center;
+  color: #F07F09;
+  margin-top: 0;
+  padding-bottom: 5px;
+  position: relative;
+  margin-bottom: 30px;
+  }
+
+
+#qsap_questions p, .qsap_intro{
+  padding-left: 20px;
+  padding-right: 10px;
+  padding-bottom: 10px;
+  }
+
+.qsap_intro span{
+  font-weight: bold;
+  font-family: Tahoma,San-serif;
+  font-size: 12pt;
+}
+
+.qsap_intro span b{
+  color: #F07F09;  
+}
+
+#qsap_questions{
+  border-top: #eeeeee 1px solid;
+}
+
+#qsap_questions h3{
+  font-family: Tahoma,San-serif;
+  font-weight: normal;
+  font-size: 16pt;
+  border-bottom: #F07F09 3px solid;
+  text-align: center;
+  color: #558abe;
+  margin-top: 0;
+  padding-bottom: 3px;
+  padding-top: 10px;
+}
+  
+#qsap_who{
+  float:left;
+  width:40%;
+  padding-right:15px;
+  padding-bottom: 100px;
+  padding-bottom: 200px;
+  background: url(~/images/who_qsap.png) no-repeat center bottom;
+  margin-bottom: 15px;
+}
+
+#qsap_how{
+  float:right;
+  width:55%; 
+  padding-bottom: 0px;
+  padding-left: 15px;
+  border-left: #eeeeee 1px solid;
+}
+  
+.qsap_how_footer {
+  color:#999999;
+  font-style: italic;
+  padding-top: 20px;
+  font-weight: bold;
+  }  
+  
+.qsap_how_footer a{
+  color:#365f91;
+  }  
+
+.qsap_how_footer a:hover{
+  color: #F07F09;
+  }
+  
+  
+#qsap_select_header {
+  position: relative;
+  display: block;
+  width: 100%;
+  clear: both;
+  font-family: Tahoma,San-serif;
+  font-weight: normal;
+  font-size: 18pt;
+  background: url(https://wioa.workforce3one.org/ws/www/images/slider-bg.jpg);
+  border-bottom: #558abe 3px solid;
+  border-top: #558abe 3px solid;
+  border-radius: 5px;
+  text-align: center;
+  color: #F07F09;
+  margin-top: 0;
+  padding: 5px 0 5px 0;
+  position: relative;
+  margin-bottom: 40px;
+  }
+
+.qsap_select_items {
+  padding-left: 80px;
+  padding-bottom: 5px;
+  margin-bottom: 0px;
+  }
+
+.qsap_select_items a {
+  color:#365f91;
+  font-weight: bold;
+  font-size: 12pt;
+  padding-right: 20px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+
+  }
+
+.qsap_select_text {
+  padding-left: 90px;
+  margin-top: 0;
+  padding-bottom: 20px;
+  border-bottom: #eeeeee 1px solid;
+  }  
+
+.qsap_select_items a:hover {
+  color: #F07F09;
+
+  }
+
+#qsap_item1 {
+  background:url(~/Images/icon-QSAP_1.png) no-repeat 0px -5px;
+  }
+
+#qsap_item2 {
+  background:url(~/images/icon-QSAP_2.png) no-repeat  0px 0px;
+  }
+
+#qsap_item3 {
+  background:url(~/images/icon-QSAP_3.png) no-repeat 0px 0px;
+  }
+
+#qsap_item4 {
+  background:url(~/images/icon-QSAP_4.png) no-repeat 0px 0px;
+  }
+
+.qsap_pdf {
+  display: inline-block;
+  position: absolute;
+  height: 21px;
+  max-height: 21px;
+  max-width: 20px;
+  background:url(~/images/icon-PDF-2.png) no-repeat;
+  content: none;
+  }
+
+.qsap_pdf:hover{
+  background:url(~/images/icon-PDF.png) no-repeat;  
+}
+
+#qsap_footer p{
+  font-weight:bold;
+  font-size:13pt;
+  font-style:italic; 
+  text-align:center;
+  color: #F07F09;
+  border-top: #558abe 5px solid;
+  padding-top: 10px;
+  position: relative;
+  margin-left: -30%;
+  margin-top: 60px;
+  margin-bottom: 5px;
+  }
